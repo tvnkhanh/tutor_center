@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">Tutor_Center_Management</string>
+    <string name="title_activity_login_screen">LoginScreenActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <!--  Auth Screen  -->
+    <string name="auth_screen_title">Find your best tutor here</string>
+    <string name="auth_screen_description">You can get best tutor and tuition from \nthis app. It will be the best way to find a \nperfect tutor in your area</string>
+    <string name="auth_screen_join_as_text">Join As</string>
+    <string name="auth_screen_login_text">Already have an account? Log in</string>
+    <string name="auth_screen_login_text_clickable_text">Log in</string>
+    <string name="auth_screen_button_text_student">Student</string>
+    <string name="auth_screen_button_text_tutor">Tutor</string>
+
+    <!--  Sign In Screen  -->
+    <string name="login_screen_title">Sign In</string>
+    <string name="login_screen_title_text">Welcome back!</string>
+    <string name="login_screen_sub_title">Sign in to your account</string>\
+    <string name="login_screen_edt_hint_1">Username</string>
+    <string name="login_screen_edt_hint_2">Password</string>
+    <string name="login_screen_button_text">Sign In</string>
+    <string name="login_screen_sign_up_text">Don\'t have an account? Sign Up</string>
+    <string name="login_screen_sign_up_text_clickable_text">Sign Up</string>
+
+    <!--  Sign Up Screen -->
+    <string name="sign_up_screen_title">Sign Up</string>
+    <string name="sign_up_screen_title_text">Welcome!</string>
+    <string name="sign_up_screen_sub_title">Create a new account</string>\
+    <string name="sign_up_screen_edt_hint_1">Username</string>
+    <string name="sign_up_screen_edt_hint_2">Password</string>
+    <string name="sign_up_screen_edt_hint_3">Re-enter password</string>
+    <string name="sign_up_screen_button_text">Continue</string>
+    <string name="sign_up_screen_login_text">Already have an account? Sign In</string>
+    <string name="sign_up_screen_login_text_clickable_text">Sign In</string>
+
+    <!--  Detail Screen  -->
+    <string name="detail_screen_title">Set Details</string>
+    <string name="detail_screen_title_text">Thanks for sign up!</string>
+    <string name="detail_screen_sub_title">Please set your full details</string>
+    <string name="detail_screen_edt_hint_1">Full Name</string>
+    <string name="detail_screen_edt_hint_2">Date of Birth</string>
+    <string name="detail_screen_edt_hint_3">Gender</string>
+    <string name="detail_screen_edt_hint_4">Contact Number</string>
+    <string name="detail_screen_edt_hint_5">Email</string>
+    <string name="detail_screen_edt_hint_6">Portrait Photos</string>
+    <string name="detail_screen_edt_hint_7">Address</string>
+    <string name="detail_screen_edt_hint_8">Qualification</string>
+    <string name="detail_screen_edt_hint_9">Experience</string>
+    <string name="detail_screen_edt_hint_10">Graduation Year</string>
+    <string name="detail_screen_edt_hint_11">Teaching Time</string>
+    <string name="detail_screen_edt_hint_12">Citizen Id</string>
+    <string name="detail_screen_button_text">Submit</string>
+
+    <string name="detail_screen_gender_1">Male</string>
+    <string name="detail_screen_gender_2">Female</string>
+    <string name="detail_screen_gender_3">Other</string>
+
+    <string name="detail_screen_teaching_time_monday_1">Morning Monday</string>
+    <string name="detail_screen_teaching_time_monday_2">Afternoon Monday</string>
+    <string name="detail_screen_teaching_time_monday_3">Evening Monday</string>
+    <string name="detail_screen_teaching_time_tuesday_1">Morning Tuesday</string>
+    <string name="detail_screen_teaching_time_tuesday_2">Afternoon Tuesday</string>">
+    <string name="detail_screen_teaching_time_tuesday_3">Evening Tuesday</string>
+    <string name="detail_screen_teaching_time_wednesday_1">Morning Wednesday</string>
+    <string name="detail_screen_teaching_time_wednesday_2">Afternoon Wednesday</string>
+    <string name="detail_screen_teaching_time_wednesday_3">Evening Wednesday</string>
+    <string name="detail_screen_teaching_time_thursday_1">Morning Thursday</string>
+    <string name="detail_screen_teaching_time_thursday_2">Afternoon Thursday</string>
+    <string name="detail_screen_teaching_time_thursday_3">Evening Thursday</string>
+    <string name="detail_screen_teaching_time_friday_1">Morning Friday</string>
+    <string name="detail_screen_teaching_time_friday_2">Afternoon Friday</string>
+    <string name="detail_screen_teaching_time_friday_3">Evening Friday</string>
+    <string name="detail_screen_teaching_time_saturday_1">Morning Saturday</string>
+    <string name="detail_screen_teaching_time_saturday_2">Afternoon Saturday</string>
+    <string name="detail_screen_teaching_time_saturday_3">Evening Saturday</string>
+    <string name="detail_screen_teaching_time_sunday_1">Morning Sunday</string>
+    <string name="detail_screen_teaching_time_sunday_2">Afternoon Sunday</string>
+    <string name="detail_screen_teaching_time_sunday_3">Evening Sunday</string>
+
+</resources>

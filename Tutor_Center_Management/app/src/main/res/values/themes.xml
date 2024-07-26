@@ -1,0 +1,14 @@
+<!-- res/values/styles.xml -->
+<resources>
+    <style name="Base.Theme.Tutor_Center_Management" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <item name="colorPrimary">@color/app_primary_color</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+
+    <style name="Theme.Tutor_Center_Management" parent="Base.Theme.Tutor_Center_Management" />
+
+</resources>

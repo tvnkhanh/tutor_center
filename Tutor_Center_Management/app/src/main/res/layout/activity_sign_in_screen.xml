@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:src="@drawable/tutor_center_logo_white"
+            app:layout_constraintHeight_percent="0.4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/toolbar"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_screen_title_text"
+            android:textSize="@dimen/app_fontsize_20"
+            android:textColor="@color/app_text_heading_color"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivLogo"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_screen_sub_title"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+        <EditText
+            android:id="@+id/edtUsername"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/login_screen_edt_hint_1"
+            android:layout_marginTop="@dimen/app_margin_top_2"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:textSize="@dimen/app_fontsize_14"
+            android:inputType="textNoSuggestions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvSubtitle"/>
+
+        <EditText
+            android:id="@+id/edtPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/login_screen_edt_hint_2"
+            android:layout_marginTop="@dimen/app_margin_top_2"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:inputType="textPassword"
+            android:textSize="@dimen/app_fontsize_14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtUsername"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_3"
+            style="@style/CustomPrimaryButton"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:text="@string/login_screen_button_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edtPassword"/>
+
+        <TextView
+            android:id="@+id/tvSignUpText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login_screen_sign_up_text"
+            android:layout_marginTop="@dimen/app_margin_top_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnSignIn"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

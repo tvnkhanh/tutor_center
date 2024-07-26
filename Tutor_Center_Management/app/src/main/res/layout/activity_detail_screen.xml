@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+
+        <variable
+            name="isTutor"
+            type="Boolean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_screen_title_text"
+            android:textSize="@dimen/app_fontsize_20"
+            android:textStyle="bold"
+            android:textColor="@color/app_text_heading_color"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            android:layout_below="@+id/toolbar"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tvSubtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/detail_screen_sub_title"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            android:layout_below="@+id/tvTitle"
+            android:layout_centerInParent="true"/>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="@{isTutor ? View.VISIBLE : View.GONE}"
+            android:layout_marginTop="@dimen/app_margin_top_3"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:layout_below="@+id/tvSubtitle"
+            android:layout_above="@+id/btnSubmit">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_1"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:inputType="textPersonName"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_2"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="datetime"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_3"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none"
+                    android:text="@string/detail_screen_gender_1"
+                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_4"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="phone" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_5"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="textEmailAddress"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_7"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="text"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_9"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="numberDecimal"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_10"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="datetime"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_11"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none"
+                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_6"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_12"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="numberDecimal"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_8"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isTutor ? View.GONE : View.VISIBLE}"
+            android:layout_marginTop="@dimen/app_margin_top_3"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:layout_below="@+id/tvSubtitle"
+            android:layout_above="@+id/btnSubmit">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_1"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:inputType="textPersonName"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_2"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="datetime"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_3"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none"
+                    android:text="@string/detail_screen_gender_1"
+                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_4"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="phone" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_5"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="textEmailAddress"/>
+            </LinearLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CustomPrimaryButton"
+            android:text="@string/detail_screen_button_text"
+            android:layout_marginTop="@dimen/app_margin_top_3"
+            android:layout_marginBottom="@dimen/app_margin_bottom_1"
+            android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+</layout>

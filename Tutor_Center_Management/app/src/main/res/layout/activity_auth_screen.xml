@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@drawable/auth_screen"
+            app:layout_constraintBottom_toTopOf="@+id/tvTitle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_screen_title"
+            android:textSize="@dimen/app_fontsize_20"
+            android:textStyle="bold"
+            android:textColor="@color/app_text_heading_color"
+            android:layout_marginBottom="@dimen/auth_screen_margin_bottom"
+            app:layout_constraintBottom_toTopOf="@+id/tvDescription"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_screen_description"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14"
+            android:gravity="center"
+            android:layout_marginBottom="@dimen/auth_screen_margin_bottom_1"
+            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/auth_screen_margin_bottom"
+            android:text="@string/auth_screen_join_as_text"
+            android:textColor="@color/app_text_heading_color"
+            android:textSize="@dimen/app_fontsize_20"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/auth_screen_margin_bottom"
+            android:gravity="center"
+            app:layout_constraintBottom_toTopOf="@+id/tvLogin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnStudent"
+                style="@style/CustomPrimaryButton"
+                android:layout_width="@dimen/auth_screen_width_button"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_screen_button_text_student" />
+
+            <View
+                android:layout_width="@dimen/auth_screen_space_button"
+                android:layout_height="0dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnTutor"
+                style="@style/CustomSecondaryButton"
+                android:layout_width="@dimen/auth_screen_width_button"
+                android:layout_height="wrap_content"
+                android:text="@string/auth_screen_button_text_tutor" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/auth_screen_login_text"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:layout_marginBottom="@dimen/auth_screen_margin_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
