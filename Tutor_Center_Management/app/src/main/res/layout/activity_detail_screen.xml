@@ -86,9 +86,7 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="none"
-                    android:text="@string/detail_screen_gender_1"
-                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+                    android:inputType="datetime"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -98,7 +96,9 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="phone" />
+                    android:inputType="none"
+                    android:text="@string/detail_screen_gender_1"
+                    android:drawableEnd="@drawable/ic_expand_arrow"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -108,13 +108,23 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="phone" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_6"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
                     android:inputType="textEmailAddress"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_7"
+                    android:hint="@string/detail_screen_edt_hint_8"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -124,7 +134,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_9"
+                    android:hint="@string/detail_screen_edt_hint_10"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -134,7 +144,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_10"
+                    android:hint="@string/detail_screen_edt_hint_11"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -144,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_11"
+                    android:hint="@string/detail_screen_edt_hint_12"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -155,7 +165,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_6"
+                    android:hint="@string/detail_screen_edt_hint_7"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -165,7 +175,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_12"
+                    android:hint="@string/detail_screen_edt_hint_13"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -175,7 +185,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_8"
+                    android:hint="@string/detail_screen_edt_hint_9"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -224,9 +234,7 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="none"
-                    android:text="@string/detail_screen_gender_1"
-                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+                    android:inputType="datetime"/>
 
                 <EditText
                     android:layout_width="match_parent"
@@ -236,13 +244,25 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="phone" />
+                    android:inputType="none"
+                    android:text="@string/detail_screen_gender_1"
+                    android:drawableEnd="@drawable/ic_expand_arrow"/>
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_5"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="phone" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:hint="@string/detail_screen_edt_hint_6"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"

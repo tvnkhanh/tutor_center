@@ -31,7 +31,7 @@ public class AuthScreenActivity extends AppCompatActivity implements ClickSpan.O
     }
 
     @Override
-    public void onClick() {
+    public void onTextClick() {
         Intent intent = new Intent(this, SignInScreenActivity.class);
         startActivity(intent);
     }

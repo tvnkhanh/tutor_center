@@ -10,6 +10,16 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
 
+    <!--  Common  -->
+    <string name="app_see_all_text">See all</string>
+
+    <!--  Bottom navigation bar  -->
+    <string name="bottom_navigation_home_title">Home</string>
+    <string name="bottom_navigation_classes_title">Classes</string>
+    <string name="bottom_navigation_wishlist_title">Wishlist</string>
+    <string name="bottom_navigation_courses_title">My Courses</string>
+    <string name="bottom_navigation_chat_title">Chat</string>
+
     <!--  Auth Screen  -->
     <string name="auth_screen_title">Find your best tutor here</string>
     <string name="auth_screen_description">You can get best tutor and tuition from \nthis app. It will be the best way to find a \nperfect tutor in your area</string>
@@ -29,6 +39,11 @@
     <string name="login_screen_sign_up_text">Don\'t have an account? Sign Up</string>
     <string name="login_screen_sign_up_text_clickable_text">Sign Up</string>
 
+    <string name="login_screen_empty_fields">Please fill in both fields</string>
+    <string name="login_screen_sign_in_success">Sign in successful</string>
+    <string name="login_screen_wrong_info">Invalid credentials</string>
+    <string name="login_screen_sign_in_failed">Sign in failed: %s</string>
+
     <!--  Sign Up Screen -->
     <string name="sign_up_screen_title">Sign Up</string>
     <string name="sign_up_screen_title_text">Welcome!</string>
@@ -44,18 +59,19 @@
     <string name="detail_screen_title">Set Details</string>
     <string name="detail_screen_title_text">Thanks for sign up!</string>
     <string name="detail_screen_sub_title">Please set your full details</string>
-    <string name="detail_screen_edt_hint_1">Full Name</string>
-    <string name="detail_screen_edt_hint_2">Date of Birth</string>
-    <string name="detail_screen_edt_hint_3">Gender</string>
-    <string name="detail_screen_edt_hint_4">Contact Number</string>
-    <string name="detail_screen_edt_hint_5">Email</string>
-    <string name="detail_screen_edt_hint_6">Portrait Photos</string>
-    <string name="detail_screen_edt_hint_7">Address</string>
-    <string name="detail_screen_edt_hint_8">Qualification</string>
-    <string name="detail_screen_edt_hint_9">Experience</string>
-    <string name="detail_screen_edt_hint_10">Graduation Year</string>
-    <string name="detail_screen_edt_hint_11">Teaching Time</string>
-    <string name="detail_screen_edt_hint_12">Citizen Id</string>
+    <string name="detail_screen_edt_hint_1">First Name</string>
+    <string name="detail_screen_edt_hint_2">Last Name</string>
+    <string name="detail_screen_edt_hint_3">Date of Birth</string>
+    <string name="detail_screen_edt_hint_4">Gender</string>
+    <string name="detail_screen_edt_hint_5">Contact Number</string>
+    <string name="detail_screen_edt_hint_6">Email</string>
+    <string name="detail_screen_edt_hint_7">Portrait Photos</string>
+    <string name="detail_screen_edt_hint_8">Address</string>
+    <string name="detail_screen_edt_hint_9">Qualification</string>
+    <string name="detail_screen_edt_hint_10">Experience</string>
+    <string name="detail_screen_edt_hint_11">Graduation Year</string>
+    <string name="detail_screen_edt_hint_12">Teaching Time</string>
+    <string name="detail_screen_edt_hint_13">Citizen Id</string>
     <string name="detail_screen_button_text">Submit</string>
 
     <string name="detail_screen_gender_1">Male</string>
@@ -84,4 +100,25 @@
     <string name="detail_screen_teaching_time_sunday_2">Afternoon Sunday</string>
     <string name="detail_screen_teaching_time_sunday_3">Evening Sunday</string>
 
+    <!--  Home Screen  -->
+    <string name="home_screen_name">Hello, %s!</string>
+    <string name="home_screen_welcome">Welcome to Wardiere Education</string>
+    <string name="home_screen_edt_hint_1">Search</string>
+    <string name="home_screen_title_1">Popular Teachers</string>
+    <string name="home_screen_title_2">Classes</string>
+
+    <!--  Dialog exit confirmation  -->
+    <string name="exit_dialog_title">Exit Application</string>
+    <string name="exit_dialog_message">Are you sure you want to exit the application?</string>
+    <string name="exit_dialog_confirm_button">Yes</string>
+    <string name="exit_dialog_cancel_button">No</string>
+
+    <!--  Teacher item  -->
+    <string name="teacher_item_button">Hire</string>
+
+    <!--  Teacher detail screen  -->
+    <string name="teacher_detail_screen_title">Teacher Details</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

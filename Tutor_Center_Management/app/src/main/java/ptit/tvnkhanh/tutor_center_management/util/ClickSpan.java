@@ -16,7 +16,7 @@ public class ClickSpan extends ClickableSpan {
     private int textColor;
 
     public interface OnClickListener {
-        void onClick();
+        void onTextClick();
     }
 
     public static void clickify(TextView view, final String clickableText,
@@ -46,7 +46,7 @@ public class ClickSpan extends ClickableSpan {
     @Override
     public void onClick(@NonNull View view) {
         if (listener != null) {
-            listener.onClick();
+            listener.onTextClick();
         }
     }
 

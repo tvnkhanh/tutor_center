@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/home_screen_min_height_item"
+    android:paddingHorizontal="@dimen/app_padding_horizontal_1"
+    android:paddingVertical="@dimen/app_padding_vertical_2"
+    android:background="@drawable/home_screen_option_item"
+    android:layout_margin="8dp"
+    android:elevation="@dimen/app_elevation"
+    android:gravity="center"
+    android:id="@+id/homeScreenOptionItem">
+
+    <ImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="@dimen/home_screen_icon_item_size"
+        android:layout_height="@dimen/home_screen_icon_item_size"
+        android:layout_centerHorizontal="true"
+        app:tint="@color/app_primary_color"
+        android:contentDescription="@null" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivIcon"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/app_margin_top_4"
+        android:text="text"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/app_fontsize_14"
+        android:textStyle="bold"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:gravity="center" />
+
+</RelativeLayout>

@@ -35,7 +35,7 @@ public class SignUpScreenActivity extends AppCompatActivity implements CustomToo
     }
 
     @Override
-    public void onClick() {
+    public void onTextClick() {
         Intent intent = new Intent(this, SignInScreenActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);

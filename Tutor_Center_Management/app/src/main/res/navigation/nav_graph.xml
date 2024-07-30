@@ -1,6 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeScreenFragment">
 
+    <fragment
+        android:id="@+id/homeScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.HomeScreenFragment"
+        android:label="fragment_home_screen"
+        tools:layout="@layout/fragment_home_screen" />
+
+    <fragment
+        android:id="@+id/classScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.ClassScreenFragment"
+        android:label="fragment_class_screen"
+        tools:layout="@layout/fragment_class_screen" />
+
+    <fragment
+        android:id="@+id/wishlistScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.WishlistScreenFragment"
+        android:label="fragment_wishlist_screen"
+        tools:layout="@layout/fragment_wishlist_screen" />
+
+    <fragment
+        android:id="@+id/courseScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.CourseScreenFragment"
+        android:label="fragment_course_screen"
+        tools:layout="@layout/fragment_course_screen" />
+
+    <fragment
+        android:id="@+id/chatScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.ChatScreenFragment"
+        android:label="fragment_chat_screen"
+        tools:layout="@layout/fragment_chat_screen" />
+
+    <fragment
+        android:id="@+id/teacherScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.TeacherDetailFragment"
+        android:label="fragment_teacher_detail_screen"
+        tools:layout="@layout/fragment_teacher_detail" />
 </navigation>

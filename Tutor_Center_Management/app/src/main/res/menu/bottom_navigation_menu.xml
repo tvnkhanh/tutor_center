@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_classes"
+        android:icon="@drawable/ic_class"
+        android:title="@string/bottom_navigation_classes_title"/>
+
+    <item
+        android:id="@+id/navigation_wishlist"
+        android:icon="@drawable/ic_favorite"
+        android:title="@string/bottom_navigation_wishlist_title"/>
+
+    <item
+        android:id="@+id/navigation_home"
+        android:icon="@drawable/ic_home"
+        android:title="@string/bottom_navigation_home_title"/>
+
+    <item
+        android:id="@+id/navigation_courses"
+        android:icon="@drawable/ic_subscription"
+        android:title="@string/bottom_navigation_courses_title"/>
+
+    <item
+        android:id="@+id/navigation_chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/bottom_navigation_chat_title"/>
+
+</menu>
