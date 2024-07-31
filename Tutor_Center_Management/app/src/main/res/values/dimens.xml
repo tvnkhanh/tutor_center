@@ -17,6 +17,7 @@
 
     <!--  Margin  -->
     <dimen name="app_margin_1">8dp</dimen>
+    <dimen name="app_margin_2">2dp</dimen>
 
     <dimen name="app_margin_top_1">5dp</dimen>
     <dimen name="app_margin_top_2">10dp</dimen>

@@ -1,7 +1,7 @@
-package ptit.tvnkhanh.tutor_center_management.service.admin;
+package ptit.tvnkhanh.tutor_center_management.services.admin;
 
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
-import ptit.tvnkhanh.tutor_center_management.service.admin.models.StaffResponse;
+import ptit.tvnkhanh.tutor_center_management.services.admin.models.StaffResponse;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
 import retrofit2.http.Body;

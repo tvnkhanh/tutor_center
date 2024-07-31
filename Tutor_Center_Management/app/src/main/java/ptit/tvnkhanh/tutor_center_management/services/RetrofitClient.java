@@ -1,4 +1,4 @@
-package ptit.tvnkhanh.tutor_center_management.service;
+package ptit.tvnkhanh.tutor_center_management.services;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

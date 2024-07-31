@@ -8,21 +8,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ptit.tvnkhanh.tutor_center_management.R;
-import ptit.tvnkhanh.tutor_center_management.databinding.FragmentWishlistScreenBinding;
+import ptit.tvnkhanh.tutor_center_management.databinding.FragmentHireTutorBinding;
 
-public class WishlistScreenFragment extends Fragment {
+public class HireTutorFragment extends Fragment {
 
-    private FragmentWishlistScreenBinding binding;
+    private FragmentHireTutorBinding binding;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentWishlistScreenBinding.inflate(getLayoutInflater());
+        binding = FragmentHireTutorBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 }

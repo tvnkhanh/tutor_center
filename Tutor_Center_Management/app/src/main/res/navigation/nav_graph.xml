@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/wishlistScreenFragment"
-        android:name="ptit.tvnkhanh.tutor_center_management.view.WishlistScreenFragment"
-        android:label="fragment_wishlist_screen"
-        tools:layout="@layout/fragment_wishlist_screen" />
+        android:name="ptit.tvnkhanh.tutor_center_management.view.TutorScreenFragment"
+        android:label="fragment_tutor_screen"
+        tools:layout="@layout/fragment_tutor_screen" />
 
     <fragment
         android:id="@+id/courseScreenFragment"
@@ -37,7 +37,7 @@
 
     <fragment
         android:id="@+id/teacherScreenFragment"
-        android:name="ptit.tvnkhanh.tutor_center_management.view.TeacherDetailFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.HireTutorFragment"
         android:label="fragment_teacher_detail_screen"
-        tools:layout="@layout/fragment_teacher_detail" />
+        tools:layout="@layout/fragment_hire_tutor" />
 </navigation>

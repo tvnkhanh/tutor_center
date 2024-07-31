@@ -1,16 +1,19 @@
-package ptit.tvnkhanh.tutor_center_management.service.auth.models;
+package ptit.tvnkhanh.tutor_center_management.services.auth.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class SignInRequest {
+public class SignUpRequest {
     @SerializedName("username")
     private String username;
     @SerializedName("passwordHash")
     private String passwordHash;
+    @SerializedName("roleId")
+    private String roleId;
 
-    public SignInRequest(String username, String passwordHash) {
+    public SignUpRequest(String username, String passwordHash, String roleId) {
         this.username = username;
         this.passwordHash = passwordHash;
+        this.roleId = roleId;
     }
 
     public String getUsername() {
@@ -27,5 +30,13 @@ public class SignInRequest {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
     }
 }

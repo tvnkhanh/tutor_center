@@ -1,7 +1,6 @@
 package ptit.tvnkhanh.tutor_center_management.view.auth;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 
@@ -12,9 +11,9 @@ import ptit.tvnkhanh.tutor_center_management.MainActivity;
 import ptit.tvnkhanh.tutor_center_management.R;
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivitySignInScreenBinding;
 import ptit.tvnkhanh.tutor_center_management.models.Account;
-import ptit.tvnkhanh.tutor_center_management.service.RetrofitClient;
-import ptit.tvnkhanh.tutor_center_management.service.auth.AuthService;
-import ptit.tvnkhanh.tutor_center_management.service.auth.models.SignInRequest;
+import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
+import ptit.tvnkhanh.tutor_center_management.services.auth.AuthService;
+import ptit.tvnkhanh.tutor_center_management.services.auth.models.SignInRequest;
 import ptit.tvnkhanh.tutor_center_management.util.ClickSpan;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;

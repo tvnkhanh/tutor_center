@@ -5,7 +5,7 @@ import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_CL
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_COURSES;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_HOME;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TEACHER_DETAIL;
-import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_WISHLIST;
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TUTORS;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -26,14 +26,18 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.List;
+
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivityMainBinding;
 import ptit.tvnkhanh.tutor_center_management.databinding.DialogExitAppConfirmBinding;
 import ptit.tvnkhanh.tutor_center_management.models.Account;
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
-import ptit.tvnkhanh.tutor_center_management.service.RetrofitClient;
-import ptit.tvnkhanh.tutor_center_management.service.admin.AdminService;
-import ptit.tvnkhanh.tutor_center_management.service.auth.AuthService;
+import ptit.tvnkhanh.tutor_center_management.models.Tutor;
+import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
+import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
+import ptit.tvnkhanh.tutor_center_management.services.auth.AuthService;
+import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
 import ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     private ActivityMainBinding binding;
     private AuthService authService;
     private AdminService adminService;
+    private TutorService tutorService;
     private String token;
     private UserSession userSession;
     private DialogExitAppConfirmBinding dialogExitAppConfirmBinding;
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         bottomNavigationView = binding.bottomNavigationView;
         bottomNavigationView.setSelectedItemId(R.id.navigation_home);
         setSupportActionBar(binding.toolbar);
-        binding.toolbar.setVisibility(View.GONE);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.navHostFragment);
         navController = navHostFragment.getNavController();
 
@@ -95,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     @Override
     protected void onResume() {
         hideAppExitConfirmationDialog();
-        binding.toolbar.setVisibility(View.GONE);
         super.onResume();
     }
 
@@ -114,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
             case NAVIGATION_CLASSES:
                 navController.navigate(R.id.classScreenFragment);
                 break;
-            case NAVIGATION_WISHLIST:
+            case NAVIGATION_TUTORS:
                 navController.navigate(R.id.wishlistScreenFragment);
                 break;
             case NAVIGATION_COURSES:
@@ -140,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         } else if (id == R.id.navigation_classes) {
             setOnNavigationDestination(NAVIGATION_CLASSES);
         } else if (id == R.id.navigation_wishlist) {
-            setOnNavigationDestination(NAVIGATION_WISHLIST);
+            setOnNavigationDestination(NAVIGATION_TUTORS);
         } else if (id == R.id.navigation_courses) {
             setOnNavigationDestination(NAVIGATION_COURSES);
         } else if (id == R.id.navigation_chat) {
@@ -238,11 +242,9 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
                             getStaffData();
                         }
                         if (account.getClientId() != null && !account.getClientId().isEmpty()) {
-                            //TODO: get client data
                             getClientData();
                         }
                         if (account.getTutorId() != null && !account.getTutorId().isEmpty()) {
-                            //TODO: get tutor data
                             getTutorData();
                         }
                     }
@@ -288,7 +290,32 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     }
 
     private void getTutorData() {
+        tutorService = RetrofitClient.getRetrofitInstance().create(TutorService.class);
+        if (token != null && !token.isEmpty()) {
+            tutorService.getTutor(token).enqueue(new Callback<Tutor>() {
+                @Override
+                public void onResponse(Call<Tutor> call, Response<Tutor> response) {
+                    if (response.isSuccessful()) {
+                        Tutor tutor = response.body();
+                        if (tutor != null) {
+                            userSession.setTutor(tutor);
+                            Intent intent = new Intent(Constants.ACTION_USER_DATA_UPDATED);
+                            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
+                            Log.d("getTutorData", "tutor: " + tutor.toString());
+                        } else {
+                            Log.d("getTutorData", "tutor is null");
+                        }
+                    } else {
+                        Log.d("getTutorData", "onResponse: " + response.message());
+                    }
+                }
 
+                @Override
+                public void onFailure(Call<Tutor> call, Throwable throwable) {
+                    Log.d("getTutorData", "onFailure: " + throwable.getMessage());
+                }
+            });
+        }
     }
 
     private void getClientData() {

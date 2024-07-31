@@ -3,10 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="isClient"
+            type="Boolean" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/app_padding_2"
+        android:layout_margin="@dimen/app_margin_2"
         android:elevation="@dimen/app_elevation"
         android:background="@drawable/background_card_item">
 
@@ -37,6 +44,8 @@
                 android:layout_height="wrap_content"
                 android:text="Shohag Hasan"
                 android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textStyle="bold"
                 android:textColor="@color/app_text_heading_color" />
 
@@ -46,6 +55,8 @@
                 android:layout_height="wrap_content"
                 android:text="Mathematics"
                 android:textSize="14sp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@color/app_text_body_text_color" />
 
             <TextView
@@ -53,6 +64,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Uttara, Sector 06, Dhaka"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textSize="14sp"
                 android:textColor="@color/app_text_body_text_color"/>
         </LinearLayout>
@@ -79,8 +92,8 @@
             android:layout_height="wrap_content"
             android:text="@string/teacher_item_button"
             android:textColor="@color/white"
-            android:backgroundTint="@color/app_primary_color"
             android:paddingHorizontal="@dimen/app_padding_horizontal_2"
+            android:enabled="@{isClient}"
             app:layout_constraintTop_toBottomOf="@id/ratingBar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

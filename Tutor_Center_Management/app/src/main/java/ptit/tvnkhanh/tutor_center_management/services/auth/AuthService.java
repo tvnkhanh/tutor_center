@@ -1,8 +1,8 @@
-package ptit.tvnkhanh.tutor_center_management.service.auth;
+package ptit.tvnkhanh.tutor_center_management.services.auth;
 
 import ptit.tvnkhanh.tutor_center_management.models.Account;
-import ptit.tvnkhanh.tutor_center_management.service.auth.models.SignInRequest;
-import ptit.tvnkhanh.tutor_center_management.service.auth.models.SignUpRequest;
+import ptit.tvnkhanh.tutor_center_management.services.auth.models.SignInRequest;
+import ptit.tvnkhanh.tutor_center_management.services.auth.models.SignUpRequest;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
 import retrofit2.http.Body;

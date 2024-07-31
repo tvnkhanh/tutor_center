@@ -192,6 +192,7 @@
                 </RelativeLayout>
 
                 <include
+                    android:id="@+id/popularTeacher"
                     layout="@layout/teacher_information_item"/>
 
                 <RelativeLayout

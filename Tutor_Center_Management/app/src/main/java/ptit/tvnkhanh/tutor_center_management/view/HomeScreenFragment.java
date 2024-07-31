@@ -18,15 +18,16 @@ import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import ptit.tvnkhanh.tutor_center_management.MainActivity;
 import ptit.tvnkhanh.tutor_center_management.R;
 import ptit.tvnkhanh.tutor_center_management.UserSession;
+import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.FragmentHomeScreenBinding;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 
 public class HomeScreenFragment extends Fragment {
 
     private FragmentHomeScreenBinding binding;
+    private OnNavigationListener navigationListener;
     private final String[] texts = {
             "Hire teacher", "Course list", "Payment", "Support"
     };
@@ -67,6 +68,12 @@ public class HomeScreenFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationListener = (OnNavigationListener) context;
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(onUserDataReceiver);
@@ -85,7 +92,7 @@ public class HomeScreenFragment extends Fragment {
         binding.hireTeacherOption.homeScreenOptionItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((MainActivity) requireActivity()).setOnNavigationDestination(Constants.NAVIGATION_TEACHER_DETAIL);
+                navigationListener.setOnNavigationDestination(Constants.NAVIGATION_TEACHER_DETAIL);
             }
         });
 
@@ -93,10 +100,17 @@ public class HomeScreenFragment extends Fragment {
 
     private void updateUI() {
         userSession = UserSession.getInstance();
+        String clientId = "";
+        if (userSession.getAccount() != null) {
+            clientId = userSession.getAccount().getClientId();
+        }
         String name = "";
         if (userSession.getStaff() != null) {
             name = userSession.getStaff().getFirstName() + " " + userSession.getStaff().getLastName();
+        } else if (userSession.getTutor() != null) {
+            name = userSession.getTutor().getFirstName() + " " + userSession.getTutor().getLastName();
         }
         binding.tvName.setText(getResources().getString(R.string.home_screen_name, name));
+        binding.popularTeacher.setIsClient(clientId != null && !clientId.isEmpty());
     }
 }

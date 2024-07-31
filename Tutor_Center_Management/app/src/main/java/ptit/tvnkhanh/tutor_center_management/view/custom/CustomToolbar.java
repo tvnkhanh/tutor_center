@@ -11,7 +11,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import ptit.tvnkhanh.tutor_center_management.R;
-import ptit.tvnkhanh.tutor_center_management.util.Utility;
 
 public class CustomToolbar extends Toolbar {
     private ImageView backButton;

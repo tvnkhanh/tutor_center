@@ -9,8 +9,8 @@ import android.view.LayoutInflater;
 import androidx.appcompat.app.AppCompatActivity;
 
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivityStartUpScreenBinding;
-import ptit.tvnkhanh.tutor_center_management.service.RetrofitClient;
-import ptit.tvnkhanh.tutor_center_management.service.auth.AuthService;
+import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
+import ptit.tvnkhanh.tutor_center_management.services.auth.AuthService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
 import ptit.tvnkhanh.tutor_center_management.view.auth.AuthScreenActivity;
@@ -57,6 +57,7 @@ public class StartUpScreenActivity extends AppCompatActivity {
                         Boolean isValid = response.body();
                         if (isValid != null && isValid) {
                             Intent intent = new Intent(StartUpScreenActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
                         } else {

@@ -1,4 +1,4 @@
-package ptit.tvnkhanh.tutor_center_management.service.admin.models;
+package ptit.tvnkhanh.tutor_center_management.services.admin.models;
 
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
 
