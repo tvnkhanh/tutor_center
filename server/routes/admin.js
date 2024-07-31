@@ -88,7 +88,7 @@ adminRouter.get('/admin/staff/get', admin, async (req, res) => {
         if (!staff)
             return res.status(404).json({ message: 'Staff not found' });
 
-        res.status(200).json({ staff });
+        res.status(200).json(staff);
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ error: 'Failed to get staff data' });

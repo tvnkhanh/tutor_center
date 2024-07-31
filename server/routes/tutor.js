@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Tutor = require("../models/tutor");
 const Account = require("../models/account");
 const auth = require("../middlewares/auth");
@@ -89,18 +90,44 @@ tutorRouter.post("/api/tutor", auth, async (req, res) => {
 });
 
 tutorRouter.get('/api/tutor/get', auth, async (req, res) => {
-    try {
-        const account = await Account.findById(req.account);
-        
-        const tutor = await Tutor.findById(account.tutorId);
-        if (!tutor)
-            return res.status(404).json({ message: 'Tutor not found' });
+  try {
+      const account = await Account.findById(req.account);
 
-        res.status(200).json({ tutor });
-    } catch (error) {
-        console.error(error.message);
-        res.status(500).json({ error: 'Failed to get tutor data' });
-    }
+      if (!account) {
+          return res.status(404).json({ message: 'Account not found' });
+      }
+
+      const tutorId = new mongoose.Types.ObjectId(account.tutorId);
+
+      const tutor = await Tutor.findOne({ _id: tutorId })
+          .populate('subjects'); 
+
+      if (!tutor) {
+          return res.status(404).json({ message: 'Tutor not found' });
+      }
+
+      res.status(200).json(tutor);
+  } catch (error) {
+      console.error('Error fetching tutor data:', error);
+      res.status(500).json({ error: 'Failed to get tutor data' });
+  }
 });
+
+tutorRouter.get('/api/tutors', auth, async (req, res) => {
+  try {
+      const tutors = await Tutor.find()
+          .populate('subjects'); 
+
+      if (tutors.length === 0) {
+          return res.status(404).json({ message: 'No tutors found' });
+      }
+
+      res.status(200).json(tutors);
+  } catch (error) {
+      console.error('Error fetching tutors data:', error);
+      res.status(500).json({ error: 'Failed to get tutors data' });
+  }
+});
+
 
 module.exports = tutorRouter;

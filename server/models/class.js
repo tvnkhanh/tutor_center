@@ -5,10 +5,12 @@ const classSchema = new Schema({
     studentInfo: {
         type: String,
     },
-    schedule: {
-        type: String,
-        required: true,
-    },
+    schedule: [
+        {
+            type: String,
+            required: true,
+        }
+    ],
     status: {
         type: String,
         required: true,
