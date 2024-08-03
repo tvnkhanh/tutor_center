@@ -21,11 +21,13 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
     private List<TutoringClass> classes;
     private Context context;
     private boolean isTutor;
+    private OnRegisterClickListener listener;
 
-    public ClassAdapter(List<TutoringClass> classes, Context context, boolean isTutor) {
+    public ClassAdapter(List<TutoringClass> classes, Context context, boolean isTutor, OnRegisterClickListener listener) {
         this.classes = classes;
         this.context = context;
         this.isTutor = isTutor;
+        this.listener = listener;
     }
 
     @NonNull
@@ -64,6 +66,8 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
                 subjects.add(subjectName);
             }
             String subjectsString = String.join(", ", subjects);
+            int salary = Integer.parseInt(tutoringClass.getSalary()) * 40 / 100;
+            String salaryString = Utility.formatNumber(salary);
             binding.setIsTutor(isTutor);
             binding.setIsNotActive(!tutoringClass.getStatus().equals(Constants.CLASS_STATUS_ACTIVE));
             binding.tvStatus.setText(Utility.boldText(context.getString(R.string.classes_screen_status, tutoringClass.getStatus())));
@@ -72,10 +76,23 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             binding.tvSchedule.setText(Utility.boldText(context.getString(R.string.classes_screen_schedule, scheduleString)));
             binding.tvForm.setText(Utility.boldText(context.getString(R.string.classes_screen_form, tutoringClass.getForm())));
             binding.tvAddress.setText(Utility.boldText(context.getString(R.string.classes_screen_address, tutoringClass.getAddress())));
+            binding.tvSalary.setText(Utility.boldText(context.getString(R.string.classes_screen_salary, salaryString)));
             binding.btnRegister.setOnClickListener(view -> {
                 Log.d("ClassAdapter", "Register button clicked for class: " + tutoringClass.get_id());
-
+                if (listener != null) {
+                    listener.onRegisterClick(tutoringClass.get_id());
+                }
+            });
+            binding.llContainer.setOnClickListener(view -> {
+                if (listener != null) {
+                    listener.onClassItemClicked(tutoringClass);
+                }
             });
         }
+    }
+
+    public interface OnRegisterClickListener {
+        void onRegisterClick(String classId);
+        void onClassItemClicked(TutoringClass tutoringClass);
     }
 }

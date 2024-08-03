@@ -101,6 +101,7 @@
                         android:drawableStart="@drawable/ic_search"
                         android:maxLines="1"
                         android:inputType="textAutoComplete"
+                        android:focusable="false"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -217,7 +218,22 @@
                         android:textSize="@dimen/app_fontsize_14"
                         android:textColor="@color/app_primary_color" />
                 </RelativeLayout>
+
+                <include
+                    android:id="@+id/classes"
+                    layout="@layout/class_item"/>
+
             </LinearLayout>
         </ScrollView>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/app_primary_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

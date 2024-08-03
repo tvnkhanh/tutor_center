@@ -31,13 +31,25 @@
 
     <fragment
         android:id="@+id/chatScreenFragment"
-        android:name="ptit.tvnkhanh.tutor_center_management.view.ChatScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.ProfileScreenFragment"
         android:label="fragment_chat_screen"
-        tools:layout="@layout/fragment_chat_screen" />
+        tools:layout="@layout/fragment_profile_screen" />
 
     <fragment
         android:id="@+id/teacherScreenFragment"
         android:name="ptit.tvnkhanh.tutor_center_management.view.HireTutorFragment"
         android:label="fragment_teacher_detail_screen"
         tools:layout="@layout/fragment_hire_tutor" />
+
+    <fragment
+        android:id="@+id/paymentScreenFragment"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.PaymentScreenFragment"
+        android:label="fragment_payment_screen"
+        tools:layout="@layout/fragment_payment_screen" />
+
+    <fragment
+        android:id="@+id/searchScreenFragment2"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.SearchScreenFragment"
+        android:label="SearchScreenFragment"
+        tools:layout="@layout/fragment_search_screen"/>
 </navigation>

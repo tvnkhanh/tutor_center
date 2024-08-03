@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/navigation_chat"
-        android:icon="@drawable/ic_chat"
-        android:title="@string/bottom_navigation_chat_title"/>
+        android:icon="@drawable/ic_profile"
+        android:title="@string/bottom_navigation_profile_title"/>
 
 </menu>

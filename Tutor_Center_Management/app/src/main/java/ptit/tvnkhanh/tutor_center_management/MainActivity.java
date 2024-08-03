@@ -1,10 +1,12 @@
 package ptit.tvnkhanh.tutor_center_management;
 
-import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_CHAT;
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_PAYMENT;
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_PROFILE;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_CLASSES;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_COURSES;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_HOME;
-import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TEACHER_DETAIL;
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_HIRE_TUTOR_DETAIL;
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_SEARCH;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TUTORS;
 
 import android.app.Dialog;
@@ -26,17 +28,19 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.List;
+import java.util.Objects;
 
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivityMainBinding;
 import ptit.tvnkhanh.tutor_center_management.databinding.DialogExitAppConfirmBinding;
 import ptit.tvnkhanh.tutor_center_management.models.Account;
+import ptit.tvnkhanh.tutor_center_management.models.Client;
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
 import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
 import ptit.tvnkhanh.tutor_center_management.services.auth.AuthService;
+import ptit.tvnkhanh.tutor_center_management.services.common.ClientService;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
@@ -52,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     private AuthService authService;
     private AdminService adminService;
     private TutorService tutorService;
+    private ClientService clientService;
     private String token;
     private UserSession userSession;
     private DialogExitAppConfirmBinding dialogExitAppConfirmBinding;
@@ -92,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
 
         getOnBackPressedDispatcher().addCallback(this, callback);
 
-        getUserData();
+//        getUserData();
 
         setContentView(binding.getRoot());
     }
@@ -124,11 +129,19 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
             case NAVIGATION_COURSES:
                 navController.navigate(R.id.courseScreenFragment);
                 break;
-            case NAVIGATION_CHAT:
+            case NAVIGATION_PROFILE:
                 navController.navigate(R.id.chatScreenFragment);
                 break;
-            case NAVIGATION_TEACHER_DETAIL:
+            case NAVIGATION_HIRE_TUTOR_DETAIL:
                 navController.navigate(R.id.teacherScreenFragment);
+                setShowToolbar();
+                break;
+            case NAVIGATION_PAYMENT:
+                navController.navigate(R.id.paymentScreenFragment);
+                setShowToolbar();
+                break;
+            case NAVIGATION_SEARCH:
+                navController.navigate(R.id.searchScreenFragment2);
                 setShowToolbar();
                 break;
             default:
@@ -148,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         } else if (id == R.id.navigation_courses) {
             setOnNavigationDestination(NAVIGATION_COURSES);
         } else if (id == R.id.navigation_chat) {
-            setOnNavigationDestination(NAVIGATION_CHAT);
+            setOnNavigationDestination(NAVIGATION_PROFILE);
         }
         return true;
     }
@@ -212,7 +225,13 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
             int id = navController.getCurrentDestination().getId();
             binding.toolbar.setListener(this);
             if (id == R.id.teacherScreenFragment) {
-                binding.toolbar.setTitle(getString(R.string.teacher_detail_screen_title));
+                binding.toolbar.setTitle(getString(R.string.hire_tutor_screen_title));
+            }
+            if (id == R.id.paymentScreenFragment) {
+                binding.toolbar.setTitle(getString(R.string.payment_screen_title));
+            }
+            if (id == R.id.searchScreenFragment2) {
+                binding.toolbar.setTitle(getString(R.string.search_screen_title));
             }
         }
     }
@@ -226,99 +245,5 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
     public void onBackPress() {
         navController.popBackStack();
         setHideToolbar();
-    }
-
-    private void getUserData() {
-        authService = RetrofitClient.getRetrofitInstance().create(AuthService.class);
-        Log.d("getUserData", "token: " + token);
-        if (token != null && !token.isEmpty()) {
-            authService.getAccount(token).enqueue(new Callback<Account>() {
-                @Override
-                public void onResponse(Call<Account> call, Response<Account> response) {
-                    Account account = response.body();
-                    if (account != null) {
-                        userSession.setAccount(account);
-                        if (account.getStaffId() != null && !account.getStaffId().isEmpty()) {
-                            getStaffData();
-                        }
-                        if (account.getClientId() != null && !account.getClientId().isEmpty()) {
-                            getClientData();
-                        }
-                        if (account.getTutorId() != null && !account.getTutorId().isEmpty()) {
-                            getTutorData();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Account> call, Throwable throwable) {
-                    Log.d("getUserData", "onFailure: " + throwable.getMessage());
-                }
-            });
-        }
-    }
-
-    private void getStaffData() {
-        adminService = RetrofitClient.getRetrofitInstance().create(AdminService.class);
-        Log.d("getStaffData", "token: " + token);
-        if (token != null && !token.isEmpty()) {
-            adminService.getStaffData(token).enqueue(new Callback<Staff>() {
-                @Override
-                public void onResponse(Call<Staff> call, Response<Staff> response) {
-                    if (response.isSuccessful()) {
-                        Staff staff = response.body();
-                        if (staff != null) {
-                            userSession.setStaff(staff);
-                            Intent intent = new Intent(Constants.ACTION_USER_DATA_UPDATED);
-                            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
-                            Log.d("getStaffData", "staff: " + staff.toString());
-                        } else {
-                            Log.d("getStaffData", "staff is null");
-                        }
-                    } else {
-                        Log.d("getStaffData", "onResponse: " + response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Staff> call, Throwable throwable) {
-
-                    Log.d("getStaffData", "onFailure: " + throwable.getMessage());
-                }
-            });
-        }
-    }
-
-    private void getTutorData() {
-        tutorService = RetrofitClient.getRetrofitInstance().create(TutorService.class);
-        if (token != null && !token.isEmpty()) {
-            tutorService.getTutor(token).enqueue(new Callback<Tutor>() {
-                @Override
-                public void onResponse(Call<Tutor> call, Response<Tutor> response) {
-                    if (response.isSuccessful()) {
-                        Tutor tutor = response.body();
-                        if (tutor != null) {
-                            userSession.setTutor(tutor);
-                            Intent intent = new Intent(Constants.ACTION_USER_DATA_UPDATED);
-                            LocalBroadcastManager.getInstance(MainActivity.this).sendBroadcast(intent);
-                            Log.d("getTutorData", "tutor: " + tutor.toString());
-                        } else {
-                            Log.d("getTutorData", "tutor is null");
-                        }
-                    } else {
-                        Log.d("getTutorData", "onResponse: " + response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Tutor> call, Throwable throwable) {
-                    Log.d("getTutorData", "onFailure: " + throwable.getMessage());
-                }
-            });
-        }
-    }
-
-    private void getClientData() {
-
     }
 }

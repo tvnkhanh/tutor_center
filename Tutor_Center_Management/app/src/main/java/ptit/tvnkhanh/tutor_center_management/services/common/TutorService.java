@@ -7,6 +7,7 @@ import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public interface TutorService {
     @GET("/api/tutor/get")
@@ -14,4 +15,7 @@ public interface TutorService {
 
     @GET("/api/tutors")
     Call<List<Tutor>> getAllTutors(@Header(Constants.X_AUTH_TOKEN) String token);
+
+    @GET("/api/get-tutor")
+    Call<Tutor> getTutorById(@Header(Constants.X_AUTH_TOKEN) String token, @Query("tutorId") String id);
 }

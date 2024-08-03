@@ -21,10 +21,10 @@ public class TutoringClass {
     private String requirement;
     @SerializedName("address")
     private String address;
-    @SerializedName("subjects")
+    @SerializedName("subjectIds")
     private List<String> subjects;
     @SerializedName("tutorId")
-    private String tutorId;
+    private List<String> tutorId;
     @SerializedName("clientId")
     private String clientId;
     @SerializedName("subjectDetails")
@@ -33,7 +33,7 @@ public class TutoringClass {
     public TutoringClass() {
     }
 
-    public TutoringClass(String _id, String studentInfo, List<String> schedule, String status, String salary, String form, String requirement, String address, List<String> subjects, String tutorId, String clientId, List<Subject> subjectDetails) {
+    public TutoringClass(String _id, String studentInfo, List<String> schedule, String status, String salary, String form, String requirement, String address, List<String> subjects, List<String> tutorId, String clientId, List<Subject> subjectDetails) {
         this._id = _id;
         this.studentInfo = studentInfo;
         this.schedule = schedule;
@@ -120,11 +120,11 @@ public class TutoringClass {
         this.subjects = subjects;
     }
 
-    public String getTutorId() {
+    public List<String> getTutorId() {
         return tutorId;
     }
 
-    public void setTutorId(String tutorId) {
+    public void setTutorId(List<String> tutorId) {
         this.tutorId = tutorId;
     }
 

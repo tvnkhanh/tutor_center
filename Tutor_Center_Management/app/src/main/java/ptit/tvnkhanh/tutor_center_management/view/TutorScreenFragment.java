@@ -1,8 +1,10 @@
 package ptit.tvnkhanh.tutor_center_management.view;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,24 +18,27 @@ import java.util.List;
 
 import ptit.tvnkhanh.tutor_center_management.UserSession;
 import ptit.tvnkhanh.tutor_center_management.adapter.TutorAdapter;
+import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.FragmentTutorScreenBinding;
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
 import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
+import ptit.tvnkhanh.tutor_center_management.util.Utility;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class TutorScreenFragment extends Fragment {
+public class TutorScreenFragment extends Fragment implements TutorAdapter.OnTutorClickListener {
 
     private FragmentTutorScreenBinding binding;
     private TutorAdapter adapter;
     private TutorService tutorService;
     private List<Tutor> tutors;
     private String clientId;
+    private OnNavigationListener navigationListener;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,11 +54,16 @@ public class TutorScreenFragment extends Fragment {
         return binding.getRoot();
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        navigationListener = (OnNavigationListener) context;
+    }
+
     private void initUI() {
         binding.progressBar.setVisibility(View.GONE);
         RecyclerView recyclerView = binding.rvTutorContainer;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new TutorAdapter(tutors, requireContext(), clientId != null && !clientId.isEmpty());
         recyclerView.setAdapter(adapter);
     }
 
@@ -69,7 +79,8 @@ public class TutorScreenFragment extends Fragment {
                     if (response.isSuccessful()) {
                         tutors = response.body();
                         if (tutors != null) {
-                            adapter = new TutorAdapter(tutors, requireContext(), clientId != null && !clientId.isEmpty());
+                            tutors.removeIf(tutor -> !tutor.getStatus().equals(Constants.TUTOR_STATUS_APPROVED));
+                            adapter = new TutorAdapter(tutors, requireContext(), clientId != null && !clientId.isEmpty(), TutorScreenFragment.this);
                             requireActivity().runOnUiThread(() -> {
                                 adapter.notifyDataSetChanged();
                                 initUI();
@@ -88,5 +99,27 @@ public class TutorScreenFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onHireClicked() {
+        navigationListener.setOnNavigationDestination(Constants.NAVIGATION_HIRE_TUTOR_DETAIL);
+    }
+
+    @Override
+    public void onTutorItemClicked(Tutor tutor) {
+        Utility.showTutorDetailDialog(requireContext(), tutor);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Utility.hideTutorDetailDialog();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Utility.hideTutorDetailDialog();
     }
 }

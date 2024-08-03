@@ -1,19 +1,42 @@
 package ptit.tvnkhanh.tutor_center_management.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import ptit.tvnkhanh.tutor_center_management.R;
-import ptit.tvnkhanh.tutor_center_management.databinding.FragmentCourseScreenBinding;
+import java.util.List;
+import java.util.Objects;
 
-public class CourseScreenFragment extends Fragment {
+import ptit.tvnkhanh.tutor_center_management.R;
+import ptit.tvnkhanh.tutor_center_management.UserSession;
+import ptit.tvnkhanh.tutor_center_management.adapter.ClassAdapter;
+import ptit.tvnkhanh.tutor_center_management.databinding.FragmentCourseScreenBinding;
+import ptit.tvnkhanh.tutor_center_management.models.TutoringClass;
+import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
+import ptit.tvnkhanh.tutor_center_management.services.common.ClassService;
+import ptit.tvnkhanh.tutor_center_management.util.Constants;
+import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
+import ptit.tvnkhanh.tutor_center_management.util.Utility;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class CourseScreenFragment extends Fragment implements ClassAdapter.OnRegisterClickListener {
 
     private FragmentCourseScreenBinding binding;
+    private ClassAdapter classAdapter;
+    private List<TutoringClass> classes;
+    private ClassService classService;
+    private String token;
+    private String tutorId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -24,6 +47,61 @@ public class CourseScreenFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentCourseScreenBinding.inflate(getLayoutInflater());
+        classService = RetrofitClient.getRetrofitInstance().create(ClassService.class);
+        token = SharedPreferencesUtility.getString(requireContext(), Constants.X_AUTH_TOKEN, "");
+        getClassesDataByAccount();
         return binding.getRoot();
+    }
+
+    private void initUI() {
+        binding.progressBar.setVisibility(View.GONE);
+        RecyclerView recyclerView = binding.rvCourseContainer;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(classAdapter);
+    }
+
+    private void getClassesDataByAccount() {
+        binding.progressBar.setVisibility(View.VISIBLE);
+        if (token != null && !token.isEmpty()) {
+            String id = "";
+            String roleId = UserSession.getInstance().getAccount().getRoleId();
+            if (Objects.equals(roleId, Constants.ROLE_CLIENT_ID))
+                id = UserSession.getInstance().getClient().get_id();
+            else if (Objects.equals(roleId, Constants.ROLE_TUTOR_ID))
+                id = UserSession.getInstance().getTutor().get_id();
+            classService.getClassById(token, id).enqueue(new Callback<List<TutoringClass>>() {
+                @SuppressLint("NotifyDataSetChanged")
+                @Override
+                public void onResponse(Call<List<TutoringClass>> call, Response<List<TutoringClass>> response) {
+                    if (response.isSuccessful()) {
+                        classes = response.body();
+                        if (classes != null) {
+                            classAdapter = new ClassAdapter(classes, requireContext(), tutorId != null && !tutorId.isEmpty(), CourseScreenFragment.this);
+                            requireActivity().runOnUiThread(() -> {
+                                classAdapter.notifyDataSetChanged();
+                                initUI();
+                            });
+                        } else {
+                            Log.d("CourseScreenFragment", "Classes data is null");
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<List<TutoringClass>> call, Throwable throwable) {
+                    Log.d("CourseScreenFragment", "Error: " + throwable.getMessage());
+                }
+            });
+        }
+    }
+
+    @Override
+    public void onRegisterClick(String classId) {
+
+    }
+
+    @Override
+    public void onClassItemClicked(TutoringClass tutoringClass) {
+        Utility.showClassDetailDialog(requireContext(), tutoringClass);
     }
 }

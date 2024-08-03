@@ -12,6 +12,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/llContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -50,7 +51,7 @@
             android:id="@+id/tvSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/classes_screen_student_info"
+            android:text="@string/classes_screen_subject"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
             android:maxLines="1"
@@ -79,6 +80,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/classes_screen_address"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/classes_screen_salary"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
             android:maxLines="2"

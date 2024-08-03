@@ -5,7 +5,9 @@
 
     <!--  Common  -->
     <dimen name="app_avatar_size">40dp</dimen>
-    
+    <dimen name="app_avatar_size_2">100dp</dimen>
+    <dimen name="app_avatar_size_3">200dp</dimen>
+
     <!--  Fontsize  -->
     <dimen name="app_fontsize_12">12dp</dimen>
     <dimen name="app_fontsize_13">13dp</dimen>
@@ -34,6 +36,7 @@
     <dimen name="app_margin_start_2">20dp</dimen>
 
     <dimen name="app_margin_horizontal_1">20dp</dimen>
+    <dimen name="app_margin_horizontal_2">4dp</dimen>
 
     <!--  Padding  -->
     <dimen name="app_padding_1">16dp</dimen>

@@ -36,11 +36,17 @@ public class Tutor {
     private String citizenId;
     @SerializedName("subjects")
     private List<Subject> subjects;
+    @SerializedName("subjectIds")
+    private List<String> subjectIds;
+    @SerializedName("status")
+    private String status;
+    @SerializedName("registerDate")
+    private Date registerDate;
 
     public Tutor() {
     }
 
-    public Tutor(String _id, String firstName, String lastName, Date dateOfBirth, String gender, String contactNumber, String email, List<String> portraitPhotos, String address, List<String> qualification, String experience, int graduationYear, String teachingTime, String citizenId, List<Subject> subjects) {
+    public Tutor(String _id, String firstName, String lastName, Date dateOfBirth, String gender, String contactNumber, String email, List<String> portraitPhotos, String address, List<String> qualification, String experience, int graduationYear, String teachingTime, String citizenId, List<Subject> subjects, List<String> subjectIds, String status, Date registerDate) {
         this._id = _id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -56,6 +62,9 @@ public class Tutor {
         this.teachingTime = teachingTime;
         this.citizenId = citizenId;
         this.subjects = subjects;
+        this.subjectIds = subjectIds;
+        this.status = status;
+        this.registerDate = registerDate;
     }
 
     public String get_id() {
@@ -176,6 +185,30 @@ public class Tutor {
 
     public void setSubjects(List<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public List<String> getSubjectIds() {
+        return subjectIds;
+    }
+
+    public void setSubjectIds(List<String> subjectIds) {
+        this.subjectIds = subjectIds;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Date getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(Date registerDate) {
+        this.registerDate = registerDate;
     }
 
     @Override

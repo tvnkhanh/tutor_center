@@ -44,4 +44,9 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/app_normal_rating_bar</item>
+        <item name="colorControlActivated">@color/app_active_rating_bar</item>
+    </style>
+
 </resources>

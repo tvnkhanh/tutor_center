@@ -10,6 +10,7 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/app_padding_2"
@@ -74,6 +75,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:theme="@style/RatingBar"
             android:isIndicator="true"
             android:numStars="5"
             android:stepSize="0.5"

@@ -9,12 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ptit.tvnkhanh.tutor_center_management.R;
-import ptit.tvnkhanh.tutor_center_management.databinding.FragmentChatScreenBinding;
+import ptit.tvnkhanh.tutor_center_management.databinding.FragmentSearchScreenBinding;
 
-public class ChatScreenFragment extends Fragment {
 
-    private FragmentChatScreenBinding binding;
-
+public class SearchScreenFragment extends Fragment {
+    private FragmentSearchScreenBinding binding;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +22,7 @@ public class ChatScreenFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentChatScreenBinding.inflate(getLayoutInflater());
+        binding = FragmentSearchScreenBinding.inflate(getLayoutInflater());
         return binding.getRoot();
     }
 }

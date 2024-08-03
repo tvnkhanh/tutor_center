@@ -12,6 +12,8 @@
     <color name="app_button_secondary_clicked_color">#E0E0E0</color>
     <color name="app_edit_text_border">#DADADA</color>
     <color name="app_edit_text_hint_color">#8A8A8A</color>
+    <color name="app_active_rating_bar">#FFC922</color>
+    <color name="app_normal_rating_bar">#D3D3D3</color>
 
     <!--  Start up screen  -->
     <color name="start_up_screen_background_color">#0E74BC</color>

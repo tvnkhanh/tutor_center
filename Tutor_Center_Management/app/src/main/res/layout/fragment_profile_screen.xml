@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/profile_info"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@color/app_primary_color"
+            android:elevation="@dimen/app_elevation"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <!-- Profile Image -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="@dimen/app_avatar_size_2"
+                android:layout_height="@dimen/app_avatar_size_2"
+                android:src="@drawable/avatar_test"
+                android:scaleType="centerCrop"
+                app:shapeAppearanceOverlay="@style/CircleImageViewStyle"
+                android:layout_gravity="center"/>
+
+            <!-- Name -->
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Humayun Kabir"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:layout_gravity="center"
+                android:paddingTop="8dp" />
+
+            <!-- ID -->
+            <TextView
+                android:id="@+id/tvId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: 11542556"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center" />
+
+            <!-- Email -->
+            <TextView
+                android:id="@+id/tvEmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mail: humayunk@gmail.com"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center" />
+
+            <!-- Address -->
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address: SPCBL, Gazipur, BD"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center" />
+        </LinearLayout>
+
+        <!-- Options List -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/profile_info"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <!-- Option Item -->
+            <include layout="@layout/profile_option_item" android:id="@+id/option_edit_profile" />
+            <include layout="@layout/profile_option_item" android:id="@+id/option_teachers_list" />
+            <include layout="@layout/profile_option_item" android:id="@+id/option_help" />
+            <include layout="@layout/profile_option_item" android:id="@+id/option_referral" />
+            <include layout="@layout/profile_option_item" android:id="@+id/option_logout" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
