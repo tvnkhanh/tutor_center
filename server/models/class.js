@@ -14,17 +14,19 @@ const classSchema = new Schema({
     status: {
         type: String,
         required: true,
-        enum: ['active', 'inactive', 'pending'],
+        enum: ['assigned', 'approved', 'pending', 'rejected', 'completed'],
         default: 'pending'
     },
     salary: {
         type: String,
         required: true,
     },
-    tutorId: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Tutor' 
-    },
+    tutorId: [
+        { 
+            type: Schema.Types.ObjectId, 
+            ref: 'Tutor' 
+        }
+    ],
     clientId: { 
         type: Schema.Types.ObjectId, 
         ref: 'Client' 
@@ -45,7 +47,11 @@ const classSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Subject'
         }
-    ]
+    ],
+    updateDate: {
+        type: Date,
+        default: Date.now
+    }
 })
 
 const Class = mongoose.model('Class', classSchema);

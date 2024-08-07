@@ -6,10 +6,6 @@ const paymentSchema = new Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Tutor' 
     },
-    clientId: { 
-        type: Schema.Types.ObjectId, 
-        ref: 'Client' 
-    },
     amount: {
         type: String,
         required: true,
@@ -21,13 +17,14 @@ const paymentSchema = new Schema({
     },
     paymentDate: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     classId: {
         type: Schema.Types.ObjectId,
         ref: 'Class'
     }
-})
+});
 
 const Payment = mongoose.model('Payment', paymentSchema);
 module.exports = Payment;

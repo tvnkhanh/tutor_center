@@ -3,6 +3,9 @@ const admin = require("../middlewares/admin");
 const Staff = require("../models/staff");
 const Account = require("../models/account");
 const Subject = require("../models/subject");
+const Tutor = require("../models/tutor");
+const Class = require("../models/class");
+const Payment = require("../models/payment");
 
 const adminRouter = express.Router();
 
@@ -116,7 +119,7 @@ adminRouter.post('/admin/create-subject', admin, async (req, res) => {
 adminRouter.patch('/admin/classes/:id/status', admin, async (req, res) => {
   try {
     const { status } = req.body;
-        const validStatuses = ['active', 'inactive', 'pending'];
+        const validStatuses = ['approved', 'assigned', 'pending', 'rejected', 'completed'];
 
         if (!validStatuses.includes(status)) {
             return res.status(400).json({ error: 'Invalid status value' });
@@ -134,8 +137,66 @@ adminRouter.patch('/admin/classes/:id/status', admin, async (req, res) => {
 
         res.status(200).json(updatedClass);
   } catch (e) {
+    res.status(400).json({ error: e.message });
+  }
+});
+
+
+adminRouter.patch('/admin/tutors/:id/status', admin, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const validStatuses = ['rejected', 'pending', 'approved'];
+
+    if (!validStatuses.includes(status)) {
+      return res.status(400).json({ error: 'Invalid status value' });
+    }
+
+    const updatedTutor = await Tutor.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true, runValidators: true }
+    ).populate('subjects'); 
+
+    if (!updatedTutor) {
+      return res.status(404).json({ error: 'Tutor not found' });
+    }
+
+    res.status(200).json(updatedTutor);
+  } catch (err) {
     res.status(400).json({ error: err.message });
   }
-})
+});
+
+adminRouter.get('/admin/revenue-statistics', admin, async (req, res) => {
+  const { startDate, endDate } = req.query;
+
+  try {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+
+      const payments = await Payment.find({
+          paymentDate: {
+              $gte: start,
+              $lte: end
+          }
+      }).populate('tutorId').populate('classId');
+
+      if (payments.length === 0) {
+          return res.json({ message: 'No payments found for the given period.' });
+      }
+
+      const revenueData = payments.map(payment => ({
+          classId: payment.classId._id,
+          tutorId: payment.tutorId._id,
+          amount: parseFloat(payment.amount),
+          paymentDate: payment.paymentDate
+      }));
+
+      res.json(revenueData);
+  } catch (error) {
+      console.error('Error fetching revenue statistics:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 module.exports = adminRouter;

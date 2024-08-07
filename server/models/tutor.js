@@ -85,6 +85,16 @@ const tutorSchema = new Schema({
             message: 'Please enter a valid citizen ID'
         },
     },
+    status: {
+        type: String,
+        required: true,
+        enum: ['rejected', 'pending', 'approved'],
+        default: 'pending',
+    },
+    registerDate: {
+        type: Date,
+        default: Date.now,
+    },
     subjects: [
         {
             type: Schema.Types.ObjectId,

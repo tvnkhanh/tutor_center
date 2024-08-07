@@ -14,7 +14,7 @@ dotenv.config();
 // Sign Up
 authRouter.post("/api/signup", async (req, res) => {
   try {
-    const { username, passwordHash, roleId } = req.body;
+    const { username, passwordHash, roleId, tutorId, clientId } = req.body;
 
     const existingAccount = await Account.findOne({ username });
     if (existingAccount) {
@@ -29,6 +29,8 @@ authRouter.post("/api/signup", async (req, res) => {
       username,
       passwordHash: hashedPassword,
       roleId: roleId,
+      tutorId: tutorId,
+      clientId: clientId,
     });
     
     account = await account.save();
@@ -81,5 +83,15 @@ authRouter.get("/", auth, async (req, res) => {
   const account = await Account.findById(req.account);
   res.json({ ...account._doc, token: req.token });
 });
+
+authRouter.get("/api/get-usernames", async (req, res) => {
+  try {
+    const accounts = await Account.find({}, 'username');
+    const usernames = accounts.map(account => account.username);
+    res.json(usernames);
+} catch (err) {
+    res.status(500).json({ message: err.message });
+}
+})
 
 module.exports = authRouter;

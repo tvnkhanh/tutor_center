@@ -10,6 +10,7 @@ const clientRouter = require('./routes/client');
 const tutorRouter = require('./routes/tutor');
 const subjectRouter = require('./routes/subject');
 const classRouter = require('./routes/class');
+const paymentRouter = require('./routes/payment');
 
 const app = express();
 const PORT = 3000;
@@ -24,6 +25,7 @@ app.use(clientRouter);
 app.use(tutorRouter);
 app.use(subjectRouter);
 app.use(classRouter);
+app.use(paymentRouter);
 
 mongoose
   .connect(DB)
