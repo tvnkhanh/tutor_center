@@ -7,9 +7,16 @@
         <variable
             name="isPending"
             type="Boolean" />
+        <variable
+            name="status"
+            type="String" />
+        <variable
+            name="isCompleted"
+            type="Boolean" />
     </data>
 
     <LinearLayout
+        android:id="@+id/llContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -28,6 +35,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/classes_screen_status"
                 android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/app_margin_bottom_2"
                 android:textSize="@dimen/app_fontsize_16"
                 android:textStyle="bold"
                 android:textColor="@color/app_text_heading_color"
@@ -36,14 +44,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/ic_edit"
-                android:layout_marginEnd="@dimen/app_margin_end_1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+<!--            <ImageView-->
+<!--                android:id="@+id/ivEditClass"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:src="@drawable/ic_edit"-->
+<!--                android:layout_marginEnd="@dimen/app_margin_end_1"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"/>-->
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
@@ -52,10 +61,20 @@
             android:background="@color/black"/>
 
         <TextView
-            android:id="@+id/tvStudentInfo"
+            android:id="@+id/tvClassId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_1"
+            android:text="@string/classes_screen_student_info"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvStudentInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/classes_screen_student_info"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
@@ -133,7 +152,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center">
+            android:gravity="center"
+            android:visibility="@{isCompleted ? View.GONE : View.VISIBLE}">
 
             <Button
                 android:id="@+id/btnRejected"
@@ -152,7 +172,7 @@
                 android:layout_marginTop="@dimen/app_margin_1"
                 android:layout_marginStart="@dimen/app_margin_end_1"
                 android:layout_gravity="center"
-                android:text="@string/classes_screen_button_change_status"/>
+                android:text="@{status}"/>
         </LinearLayout>
 
     </LinearLayout>

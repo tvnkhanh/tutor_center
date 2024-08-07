@@ -19,10 +19,11 @@ public interface ClassService {
     Call<List<TutoringClass>> getClasses(@Header(Constants.X_AUTH_TOKEN) String token);
 
     @PUT("/api/{classId}/tutor-register/{tutorId}")
-    Call<TutoringClass> registerTutor(@Header(Constants.X_AUTH_TOKEN) String token, @Path("classId") String classId, @Path("tutorId") String tutorId);
+    Call<TutoringClass> registerTutor(@Header(Constants.X_AUTH_TOKEN) String token, @Path("classId") String classId,
+                                      @Path("tutorId") String tutorId);
 
     @POST("/api/create-class")
-    Call<TutoringClass> createClass(@Header(Constants.X_AUTH_TOKEN) String token, @Body TutoringClass tutoringClass);
+    Call<TutoringClass> requestOpenClass(@Header(Constants.X_AUTH_TOKEN) String token, @Body TutoringClass tutoringClass);
 
     @GET("/api/classes/{id}")
     Call<List<TutoringClass>> getClassById(@Header(Constants.X_AUTH_TOKEN) String token, @Path("id") String id);
@@ -32,4 +33,10 @@ public interface ClassService {
 
     @GET("/api/get-payment-info/client")
     Call<List<PaymentInfoDataResponse>> getClassesPaymentInfoByClientId(@Header(Constants.X_AUTH_TOKEN) String token, @Query("clientId") String clientId);
+
+    @GET("/api/search-class")
+    Call<List<TutoringClass>> searchClass(@Header(Constants.X_AUTH_TOKEN) String token, @Query("q") String subjectName);
+
+    @PUT("/api/update-class/{id}")
+    Call<TutoringClass> updateClass(@Path("id") String classId, @Body TutoringClass updatedClass);
 }

@@ -3,7 +3,6 @@ package ptit.tvnkhanh.tutor_center_management.models;
 public class Payment {
     private String id;
     private String tutorId;
-    private String clientId;
     private String amount;
     private String paymentMethod;
     private String paymentDate;
@@ -12,15 +11,6 @@ public class Payment {
     public Payment() {
     }
 
-    public Payment(String id, String tutorId, String clientId, String amount, String paymentMethod, String paymentDate, String classId) {
-        this.id = id;
-        this.tutorId = tutorId;
-        this.clientId = clientId;
-        this.amount = amount;
-        this.paymentMethod = paymentMethod;
-        this.paymentDate = paymentDate;
-        this.classId = classId;
-    }
 
     public String getId() {
         return id;
@@ -36,14 +26,6 @@ public class Payment {
 
     public void setTutorId(String tutorId) {
         this.tutorId = tutorId;
-    }
-
-    public String getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(String clientId) {
-        this.clientId = clientId;
     }
 
     public String getAmount() {
@@ -83,7 +65,6 @@ public class Payment {
         return "Payment{" +
                 "id='" + id + '\'' +
                 ", tutorId='" + tutorId + '\'' +
-                ", clientId='" + clientId + '\'' +
                 ", amount='" + amount + '\'' +
                 ", paymentMethod='" + paymentMethod + '\'' +
                 ", paymentDate='" + paymentDate + '\'' +

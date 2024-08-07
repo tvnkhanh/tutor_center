@@ -68,7 +68,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             String subjects = String.join(", ", subjectsList);
             int amount = Integer.parseInt(dataResponse.getSalary());
             if (Objects.equals(roleId, Constants.ROLE_TUTOR_ID)) {
-                amount = Integer.parseInt(dataResponse.getSalary()) * 40 / 100;
+                amount = Integer.parseInt(dataResponse.getSalary()) * 30 / 100;
             }
             binding.setIsPaid(Objects.equals(dataResponse.getPaymentStatus(), Constants.PAYMENT_STATUS_PAID));
             binding.tvStatus.setText(Utility.boldText(context.getString(R.string.payment_screen_status, dataResponse.getPaymentStatus())));
@@ -88,5 +88,10 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
     public interface OnPaymentInfoClickListener {
         void onPayButtonClicked(PaymentInfoDataResponse dataResponse);
+    }
+
+    public void updateData(List<PaymentInfoDataResponse> newPaymentList) {
+        this.dataResponses = newPaymentList;
+        notifyDataSetChanged();
     }
 }

@@ -1,5 +1,7 @@
 package ptit.tvnkhanh.tutor_center_management.services.auth;
 
+import java.util.List;
+
 import ptit.tvnkhanh.tutor_center_management.models.Account;
 import ptit.tvnkhanh.tutor_center_management.services.auth.models.SignInRequest;
 import ptit.tvnkhanh.tutor_center_management.services.auth.models.SignUpRequest;
@@ -22,4 +24,7 @@ public interface AuthService {
 
     @POST("/api/signup")
     Call<Account> signUp(@Body SignUpRequest signUpRequest);
+
+    @GET("/api/get-usernames")
+    Call<List<String>> getUsernames();
 }

@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.navigation.ui.ktx)
     implementation(libs.glide)
     implementation(libs.mpandroidchart)
+    implementation(libs.cloudinary.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

@@ -1,13 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="isTutor"
             type="Boolean" />
+
+        <variable
+            name="isEditable"
+            type="Boolean" />
+
         <variable
             name="isNotActive"
+            type="Boolean" />
+
+        <variable
+            name="isRegistered"
             type="Boolean" />
     </data>
 
@@ -15,93 +27,136 @@
         android:id="@+id/llContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/app_padding_1"
         android:layout_margin="@dimen/app_margin_1"
         android:background="@drawable/background_card_item"
-        android:elevation="@dimen/app_elevation">
+        android:elevation="@dimen/app_elevation"
+        android:orientation="vertical"
+        android:padding="@dimen/app_padding_1">
 
-        <TextView
-            android:id="@+id/tvStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/classes_screen_status"
-            android:layout_gravity="center"
-            android:textSize="@dimen/app_fontsize_16"
-            android:textStyle="bold"
-            android:textColor="@color/app_text_heading_color"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/app_margin_bottom_2"
+                android:text="@string/classes_screen_status"
+                android:textColor="@color/app_text_heading_color"
+                android:textSize="@dimen/app_fontsize_16"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivEditClass"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="@dimen/app_margin_end_1"
+                android:visibility="@{!isTutor &amp;&amp; isEditable ? View.VISIBLE : View.GONE}"
+                android:src="@drawable/ic_edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"/>
+            android:background="@color/black" />
 
         <TextView
-            android:id="@+id/tvStudentInfo"
+            android:id="@+id/tvClassId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_1"
-            android:text="@string/classes_screen_student_info"
+            android:text="@string/classes_screen_class_id"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
             android:maxLines="2"
             android:ellipsize="end"/>
 
         <TextView
+            android:id="@+id/tvStudentInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@string/classes_screen_student_info"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
+
+        <TextView
             android:id="@+id/tvSubject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/classes_screen_subject"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:text="@string/classes_screen_subject"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
 
         <TextView
             android:id="@+id/tvSchedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/classes_screen_schedule"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"
+            android:ellipsize="end"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:text="@string/classes_screen_schedule"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
 
         <TextView
             android:id="@+id/tvForm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/classes_screen_form"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"/>
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
 
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/classes_screen_address"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            android:text="@string/classes_screen_address"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
 
         <TextView
             android:id="@+id/tvSalary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/classes_screen_salary"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:ellipsize="end"/>
+            android:text="@string/classes_screen_salary"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
+
+        <TextView
+            android:id="@+id/tvReason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:visibility="@{!isTutor &amp;&amp; isEditable ? View.VISIBLE : View.GONE}"
+            android:text="@string/classes_screen_reason"
+            android:textColor="@color/app_text_body_text_color"
+            android:textSize="@dimen/app_fontsize_14" />
 
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_margin_1"
             android:layout_gravity="center"
-            android:enabled="@{isTutor &amp;&amp; isNotActive}"
-            android:text="@string/classes_screen_button_register"/>
+            android:layout_marginTop="@dimen/app_margin_1"
+            android:enabled="@{isTutor &amp;&amp; isNotActive &amp;&amp; !isRegistered}"
+            android:text="@string/classes_screen_button_register"
+            android:visibility="@{isTutor ? View.VISIBLE : View.GONE}" />
     </LinearLayout>
 </layout>

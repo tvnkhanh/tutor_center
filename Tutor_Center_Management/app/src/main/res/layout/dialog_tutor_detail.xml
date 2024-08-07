@@ -39,10 +39,18 @@
                 android:textColor="@color/app_text_heading_color"/>
 
             <TextView
-                android:id="@+id/tvName"
+                android:id="@+id/tvTutorId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_margin_top_1"
+                android:text="@string/detail_tutor_screen_tutor_id"
+                android:textSize="@dimen/app_fontsize_14"
+                android:textColor="@color/app_text_body_text_color"/>
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/detail_tutor_screen_name"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
@@ -68,6 +76,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_tutor_screen_contact"
+                android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
 
@@ -75,6 +84,7 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:text="@string/detail_tutor_screen_email"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
@@ -83,6 +93,7 @@
                 android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:text="@string/detail_tutor_screen_address"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
@@ -93,6 +104,14 @@
                 android:layout_height="wrap_content"
                 android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:text="@string/detail_tutor_screen_cid"
+                android:textSize="@dimen/app_fontsize_14"
+                android:textColor="@color/app_text_body_text_color"/>
+
+            <TextView
+                android:id="@+id/tvSubjects"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_tutor_screen_subjects"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
 
@@ -117,12 +136,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_margin_top_2"
                 android:text="Qualification"
+                android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:textSize="@dimen/app_fontsize_16"
                 android:textStyle="bold"
                 android:textColor="@color/app_text_heading_color"/>
 
             <ImageView
                 android:id="@+id/ivQualification"
+                android:visibility="@{isAdmin ? View.VISIBLE : View.GONE}"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
                 android:layout_gravity="center"

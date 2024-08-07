@@ -55,6 +55,10 @@
     <string name="sign_up_screen_button_text">Continue</string>
     <string name="sign_up_screen_login_text">Already have an account? Sign In</string>
     <string name="sign_up_screen_login_text_clickable_text">Sign In</string>
+    <string name="sign_up_screen_username_error">Username already exists</string>">
+    <string name="sign_up_screen_re_enter_password_error">Your re-entered password does not match</string>
+    <string name="sign_up_empty_fields">Please fill in all fields</string>
+    <string name="sign_up_screen_successful">Sign up successful!</string>
 
     <!--  Detail Screen  -->
     <string name="detail_screen_title">Set Details</string>
@@ -124,17 +128,20 @@
     <string name="teacher_item_address">#Address:# %s</string>
 
     <!--  Detail tutor  -->
+    <string name="detail_tutor_screen_tutor_id">Tutor ID: %s</string>
     <string name="detail_tutor_screen_name">Name: %s</string>
     <string name="detail_tutor_screen_gender">Gender: %s</string>
     <string name="detail_tutor_screen_contact">Contact number: %s</string>
     <string name="detail_tutor_screen_email">Email: %s</string>
     <string name="detail_tutor_screen_address">Address: %s</string>
     <string name="detail_tutor_screen_cid">Citizen ID: %s</string>
+    <string name="detail_tutor_screen_subjects">Subjects: %s</string>
     <string name="detail_tutor_screen_teaching_time">Teaching time: %s</string>
     <string name="detail_tutor_screen_graduation_year">Graduation year: %s</string>
     <string name="detail_tutor_screen_date_of_birth">Date of Birth: %s</string>
 
     <!--  Detail class  -->
+    <string name="detail_class_id">Class ID: %s</string>
     <string name="detail_class_screen_name">Tutor name: %s</string>
     <string name="detail_class_screen_student_name">Student name: %s</string>
     <string name="detail_class_screen_student_info">Student info: %s</string>
@@ -169,12 +176,14 @@
 
     <!--  Classes  -->
     <string name="classes_screen_status">#Status:# %s</string>
+    <string name="classes_screen_class_id">#Class ID:# %s</string>
     <string name="classes_screen_student_info">#Student info:# %s</string>
     <string name="classes_screen_subject">#Subject:# %s</string>
     <string name="classes_screen_schedule">#Schedule:# %s</string>
     <string name="classes_screen_form">#Form:# %s</string>
     <string name="classes_screen_address">#Address:# %s</string>
     <string name="classes_screen_salary">#Salary:# %s</string>
+    <string name="classes_screen_reason">#Reason:# %s</string>
     <string name="classes_screen_requirement">#Requirement:# %s</string>
     <string name="classes_screen_tutors">#Tutors:# %s</string>
     <string name="classes_screen_button_register">Register</string>
@@ -188,8 +197,12 @@
     <string name="profile_screen_item_title_4">Referral</string>
     <string name="profile_screen_item_title_5">Log out</string>
 
+    <!--  Dialog  -->
+    <string name="dialog_warning_title">Warning</string>
+
     <!--  Search screen  -->
     <string name="search_screen_title">Search</string>
+    <string name="search_screen_type">Search by %s</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

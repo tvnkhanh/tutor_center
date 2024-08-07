@@ -14,14 +14,15 @@ import ptit.tvnkhanh.tutor_center_management.databinding.DialogItemRadioBinding;
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<String> items;
-    private int selectedPosition = -1;
+    private int selectedPosition;
     private OnItemClickListener onItemClickListener;
     private Context context;
 
-    public ItemAdapter(Context context, List<String> items, OnItemClickListener onItemClickListener) {
+    public ItemAdapter(Context context, List<String> items, OnItemClickListener onItemClickListener, int selectedPosition) {
         this.items = items;
         this.onItemClickListener = onItemClickListener;
         this.context = context;
+        this.selectedPosition = selectedPosition;
     }
 
     @NonNull

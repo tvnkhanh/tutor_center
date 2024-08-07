@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions;
 
 import java.util.Objects;
 
+import ptit.tvnkhanh.tutor_center_management.MainActivity;
 import ptit.tvnkhanh.tutor_center_management.R;
 import ptit.tvnkhanh.tutor_center_management.UserSession;
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
@@ -71,6 +72,12 @@ public class HomeScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         LocalBroadcastManager.getInstance(requireContext()).registerReceiver(onUserDataReceiver, new IntentFilter(Constants.ACTION_USER_DATA_UPDATED));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MainActivity) requireActivity()).setHideToolbar();
     }
 
     @Override

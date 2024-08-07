@@ -12,6 +12,7 @@ import java.util.List;
 import ptit.tvnkhanh.tutor_center_management.R;
 import ptit.tvnkhanh.tutor_center_management.databinding.AdminTutorItemBinding;
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
+import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.Utility;
 
 public class AdminTutorAdapter extends RecyclerView.Adapter<AdminTutorAdapter.ViewHolder> {
@@ -55,6 +56,11 @@ public class AdminTutorAdapter extends RecyclerView.Adapter<AdminTutorAdapter.Vi
         public void bind(Tutor tutor) {
             String name = tutor.getFirstName() + " " + tutor.getLastName();
             String dateOfBirth = Utility.convertDateFormat(tutor.getDateOfBirth().getTime());
+            if (tutor.getStatus() != null) {
+                if (tutor.getStatus().equals(Constants.TUTOR_STATUS_PENDING)) {
+                    binding.setIsPending(true);
+                }
+            }
             binding.tvStatus.setText(Utility.boldText(context.getString(R.string.teacher_item_status, tutor.getStatus())));
             binding.tvName.setText(Utility.boldText(context.getString(R.string.teacher_item_name, name)));
             binding.tvDateOfBirth.setText(Utility.boldText(context.getString(R.string.teacher_item_birth, dateOfBirth)));
@@ -70,11 +76,17 @@ public class AdminTutorAdapter extends RecyclerView.Adapter<AdminTutorAdapter.Vi
                     listener.onRejectClick(tutor);
                 }
             });
+            binding.llContainer.setOnClickListener(view -> {
+                if (listener != null) {
+                    listener.onTutorDetailClick(tutor);
+                }
+            });
         }
     }
 
     public interface OnTutorItemClickListener {
         void onApproveClick(Tutor tutor);
         void onRejectClick(Tutor tutor);
+        void onTutorDetailClick(Tutor tutor);
     }
 }

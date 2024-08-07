@@ -74,7 +74,7 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
                     .into(binding.ivAvatar);
             binding.tvName.setText(fullName);
             binding.tvSubject.setText(subjectsString);
-            binding.tvLocation.setText(tutor.getAddress());
+            binding.tvGraduationYear.setText(context.getString(R.string.detail_tutor_screen_graduation_year, String.valueOf(tutor.getGraduationYear())));
             binding.btnHire.setOnClickListener(view -> {
                 if (listener != null) {
                     listener.onHireClicked();

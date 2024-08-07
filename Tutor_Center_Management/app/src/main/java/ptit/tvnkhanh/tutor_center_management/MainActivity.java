@@ -22,12 +22,14 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.List;
 import java.util.Objects;
 
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
@@ -36,6 +38,7 @@ import ptit.tvnkhanh.tutor_center_management.databinding.DialogExitAppConfirmBin
 import ptit.tvnkhanh.tutor_center_management.models.Account;
 import ptit.tvnkhanh.tutor_center_management.models.Client;
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
+import ptit.tvnkhanh.tutor_center_management.models.Subject;
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
 import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
@@ -44,6 +47,7 @@ import ptit.tvnkhanh.tutor_center_management.services.common.ClientService;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
+import ptit.tvnkhanh.tutor_center_management.util.Utility;
 import ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -98,6 +102,19 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         getOnBackPressedDispatcher().addCallback(this, callback);
 
 //        getUserData();
+
+        Utility.fetchAllReasons();
+        Utility.loadAllSubjects(new Utility.SubjectCallback() {
+            @Override
+            public void onSuccess(List<Subject> subjects) {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
 
         setContentView(binding.getRoot());
     }
@@ -236,14 +253,26 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         }
     }
 
-    private void setHideToolbar() {
+    public void setHideToolbar() {
         binding.toolbar.setVisibility(View.GONE);
         binding.bottomNavigationView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onBackPress() {
+        int beforeId = 0;
+        int afterId = 0;
+        if (navController.getCurrentDestination() != null) {
+            beforeId = navController.getCurrentDestination().getId();
+        }
         navController.popBackStack();
-        setHideToolbar();
+        if (navController.getCurrentDestination() != null) {
+            afterId = navController.getCurrentDestination().getId();
+        }
+        if (!(beforeId == R.id.teacherScreenFragment && afterId == R.id.searchScreenFragment2)) {
+            setHideToolbar();
+        } else {
+            setShowToolbar();
+        }
     }
 }

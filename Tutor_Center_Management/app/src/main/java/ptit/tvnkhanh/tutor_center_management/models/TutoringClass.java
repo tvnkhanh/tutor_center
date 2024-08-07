@@ -1,7 +1,7 @@
 package ptit.tvnkhanh.tutor_center_management.models;
 
 import com.google.gson.annotations.SerializedName;
-
+import java.util.Date;
 import java.util.List;
 
 public class TutoringClass {
@@ -28,12 +28,14 @@ public class TutoringClass {
     @SerializedName("clientId")
     private String clientId;
     @SerializedName("subjectDetails")
-    List<Subject> subjectsDetails;
+    private List<Subject> subjectsDetails;
+    @SerializedName("updateDate")
+    private Date updateDate;  // Add this field
 
     public TutoringClass() {
     }
 
-    public TutoringClass(String _id, String studentInfo, List<String> schedule, String status, String salary, String form, String requirement, String address, List<String> subjects, List<String> tutorId, String clientId, List<Subject> subjectDetails) {
+    public TutoringClass(String _id, String studentInfo, List<String> schedule, String status, String salary, String form, String requirement, String address, List<String> subjects, List<String> tutorId, String clientId, List<Subject> subjectDetails, Date updateDate) {
         this._id = _id;
         this.studentInfo = studentInfo;
         this.schedule = schedule;
@@ -46,6 +48,7 @@ public class TutoringClass {
         this.tutorId = tutorId;
         this.clientId = clientId;
         this.subjectsDetails = subjectDetails;
+        this.updateDate = updateDate;
     }
 
     public String get_id() {
@@ -142,5 +145,32 @@ public class TutoringClass {
 
     public void setSubjectDetails(List<Subject> subjectsDetails) {
         this.subjectsDetails = subjectsDetails;
+    }
+
+    public Date getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    @Override
+    public String toString() {
+        return "TutoringClass{" +
+                "_id='" + _id + '\'' +
+                ", studentInfo='" + studentInfo + '\'' +
+                ", schedule=" + schedule +
+                ", status='" + status + '\'' +
+                ", salary='" + salary + '\'' +
+                ", form='" + form + '\'' +
+                ", requirement='" + requirement + '\'' +
+                ", address='" + address + '\'' +
+                ", subjects=" + subjects +
+                ", tutorId=" + tutorId +
+                ", clientId='" + clientId + '\'' +
+                ", subjectsDetails=" + subjectsDetails +
+                ", updateDate=" + updateDate +
+                '}';
     }
 }

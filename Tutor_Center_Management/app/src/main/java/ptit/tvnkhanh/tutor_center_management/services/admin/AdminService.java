@@ -8,9 +8,11 @@ import ptit.tvnkhanh.tutor_center_management.models.TutoringClass;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.RevenueResponse;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StatusRequest;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StaffResponse;
+import ptit.tvnkhanh.tutor_center_management.services.common.models.ReasonRequest;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
@@ -26,11 +28,21 @@ public interface AdminService {
     Call<Staff> getStaffData(@Header(Constants.X_AUTH_TOKEN) String token);
 
     @PATCH("/admin/classes/{id}/status")
-    Call<TutoringClass> updateClassStatus(@Header(Constants.X_AUTH_TOKEN) String token, @Path("id") String classId, @Body StatusRequest statusRequest);
+    Call<TutoringClass> updateClassStatus(@Header(Constants.X_AUTH_TOKEN) String token, @Path("id") String classId,
+                                          @Body StatusRequest statusRequest);
 
     @PATCH("/admin/tutors/{id}/status")
     Call<Tutor> updateTutorStatus(@Header(Constants.X_AUTH_TOKEN) String token, @Path("id") String tutorId, @Body StatusRequest statusRequest);
 
     @GET("/admin/revenue-statistics")
     Call<List<RevenueResponse>> getRevenueStatistics(@Header(Constants.X_AUTH_TOKEN) String token, @Query("startDate") String startDate, @Query("endDate") String endDate);
+
+    @POST("/api/create-reason")
+    Call<ReasonRequest> createReason(@Body ReasonRequest reasonRequest);
+
+    @DELETE("/api/delete-reason/{classId}")
+    Call<Void> deleteReason(@Path("classId") String classId);
+
+    @GET("/api/get-reason")
+    Call<List<ReasonRequest>> getReasons();
 }

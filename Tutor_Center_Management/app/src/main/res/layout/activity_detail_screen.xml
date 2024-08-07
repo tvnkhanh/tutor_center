@@ -15,6 +15,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:indeterminateTint="@color/app_primary_color"
+            android:layout_centerInParent="true"/>
+
         <ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -60,6 +68,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edtTutorFirstName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -69,6 +78,7 @@
                     android:inputType="textPersonName"/>
 
                 <EditText
+                    android:id="@+id/edtTutorLastName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -76,9 +86,10 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="datetime"/>
+                    android:inputType="textPersonName"/>
 
                 <EditText
+                    android:id="@+id/edtDateOfBirthTutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -86,9 +97,10 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="datetime"/>
+                    android:inputType="textNoSuggestions"/>
 
                 <EditText
+                    android:id="@+id/edtGenderTutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -97,10 +109,12 @@
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
                     android:inputType="none"
+                    android:focusable="false"
                     android:text="@string/detail_screen_gender_1"
                     android:drawableEnd="@drawable/ic_expand_arrow"/>
 
                 <EditText
+                    android:id="@+id/edtContactNumberTutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -111,6 +125,7 @@
                     android:inputType="phone" />
 
                 <EditText
+                    android:id="@+id/edtEmailTutor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -121,6 +136,7 @@
                     android:inputType="textEmailAddress"/>
 
                 <EditText
+                    android:id="@+id/edtTutorAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -131,6 +147,7 @@
                     android:inputType="text"/>
 
                 <EditText
+                    android:id="@+id/edtTutorExperience"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -138,9 +155,10 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="textNoSuggestions"/>
 
                 <EditText
+                    android:id="@+id/edtTutorGraduationYear"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -151,6 +169,7 @@
                     android:inputType="datetime"/>
 
                 <EditText
+                    android:id="@+id/edtTutorTeachingTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -158,20 +177,10 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="none"
-                    android:drawableEnd="@drawable/ic_expand_arrow"/>
+                    android:inputType="none"/>
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_7"
-                    android:textSize="@dimen/app_fontsize_14"
-                    android:textColor="@color/app_text_body_text_color"
-                    android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="none" />
-
-                <EditText
+                    android:id="@+id/edtTutorCitizenId"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -182,14 +191,40 @@
                     android:inputType="numberDecimal"/>
 
                 <EditText
+                    android:id="@+id/edtPortraitPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/CustomEditTextStyle"
+                    android:focusable="false"
+                    android:hint="@string/detail_screen_edt_hint_7"
+                    android:textSize="@dimen/app_fontsize_14"
+                    android:textColor="@color/app_text_body_text_color"
+                    android:layout_marginTop="@dimen/app_margin_top_2"
+                    android:inputType="none" />
+
+                <ImageView
+                    android:id="@+id/ivPortraitPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_margin_top_2"/>
+
+                <EditText
+                    android:id="@+id/edtQualification"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_9"
                     android:textSize="@dimen/app_fontsize_14"
+                    android:focusable="false"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
                     android:inputType="none"/>
+
+                <ImageView
+                    android:id="@+id/ivQualification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_margin_top_2"/>
             </LinearLayout>
         </ScrollView>
 
@@ -208,6 +243,7 @@
                 android:orientation="vertical">
 
                 <EditText
+                    android:id="@+id/edtFirstNameUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -217,6 +253,7 @@
                     android:inputType="textPersonName"/>
 
                 <EditText
+                    android:id="@+id/edtLastNameUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -224,31 +261,35 @@
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="datetime"/>
+                    android:inputType="textPersonName"/>
+
+<!--                <EditText-->
+<!--                    android:id="@+id/edtDateOfBirthUser"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/CustomEditTextStyle"-->
+<!--                    android:hint="@string/detail_screen_edt_hint_3"-->
+<!--                    android:textSize="@dimen/app_fontsize_14"-->
+<!--                    android:textColor="@color/app_text_body_text_color"-->
+<!--                    android:layout_marginTop="@dimen/app_margin_top_2"-->
+<!--                    android:inputType="textNoSuggestions"/>-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/edtGenderUser"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/CustomEditTextStyle"-->
+<!--                    android:hint="@string/detail_screen_edt_hint_4"-->
+<!--                    android:textSize="@dimen/app_fontsize_14"-->
+<!--                    android:textColor="@color/app_text_body_text_color"-->
+<!--                    android:layout_marginTop="@dimen/app_margin_top_2"-->
+<!--                    android:inputType="none"-->
+<!--                    android:focusable="false"-->
+<!--                    android:text="@string/detail_screen_gender_1"-->
+<!--                    android:drawableEnd="@drawable/ic_expand_arrow"/>-->
 
                 <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_3"
-                    android:textSize="@dimen/app_fontsize_14"
-                    android:textColor="@color/app_text_body_text_color"
-                    android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="datetime"/>
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/CustomEditTextStyle"
-                    android:hint="@string/detail_screen_edt_hint_4"
-                    android:textSize="@dimen/app_fontsize_14"
-                    android:textColor="@color/app_text_body_text_color"
-                    android:layout_marginTop="@dimen/app_margin_top_2"
-                    android:inputType="none"
-                    android:text="@string/detail_screen_gender_1"
-                    android:drawableEnd="@drawable/ic_expand_arrow"/>
-
-                <EditText
+                    android:id="@+id/edtContactNumberUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
@@ -259,6 +300,7 @@
                     android:inputType="phone" />
 
                 <EditText
+                    android:id="@+id/edtEmailUser"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"

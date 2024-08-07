@@ -2,6 +2,7 @@ package ptit.tvnkhanh.tutor_center_management.view.admin;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
@@ -24,6 +25,7 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -34,6 +36,7 @@ import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.RevenueResponse;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
+import ptit.tvnkhanh.tutor_center_management.util.Utility;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -52,9 +55,9 @@ public class AdminRevenueFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentAdminRevenueBinding.inflate(getLayoutInflater());
+        binding = FragmentAdminRevenueBinding.inflate(inflater, container, false);
         token = SharedPreferencesUtility.getString(requireContext(), Constants.X_AUTH_TOKEN, "");
         initUI();
         return binding.getRoot();
@@ -83,30 +86,48 @@ public class AdminRevenueFragment extends Fragment {
                         startDate = selection.first;
                         endDate = selection.second;
 
-                        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
-                        String start = sdf.format(startDate);
-                        String end = sdf.format(endDate);
+                        if (isDateRangeValid(startDate, endDate)) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy", Locale.getDefault());
+                            String start = sdf.format(startDate);
+                            String end = sdf.format(endDate);
 
-                        binding.tvSelectedRange.setText(String.format("Selected range: %s - %s", start, end));
-
-                        fetchRevenueStatistics();
+                            binding.tvSelectedRange.setText(String.format("Selected range: %s - %s", start, end));
+                            fetchRevenueStatistics();
+                        } else {
+                            Utility.showToast(requireContext(), "Please select a range within 6 months.");
+                        }
                     }
                 }
             });
         });
     }
 
+    private boolean isDateRangeValid(long startDate, long endDate) {
+        Calendar startCal = Calendar.getInstance();
+        Calendar endCal = Calendar.getInstance();
+        startCal.setTimeInMillis(startDate);
+        endCal.setTimeInMillis(endDate);
+
+        int monthsDiff = (endCal.get(Calendar.YEAR) - startCal.get(Calendar.YEAR)) * 12 + endCal.get(Calendar.MONTH) - startCal.get(Calendar.MONTH);
+        return monthsDiff <= 6;
+    }
+
     private void fetchRevenueStatistics() {
         adminService = RetrofitClient.getRetrofitInstance().create(AdminService.class);
         if (token != null && !token.isEmpty()) {
-            Log.d("AdminRevenueFragment", "startDate: " + startDate);
-            Log.d("AdminRevenueFragment", "endDate: " + endDate);
-            adminService.getRevenueStatistics(token, String.valueOf(startDate), String.valueOf(endDate)).enqueue(new Callback<List<RevenueResponse>>() {
+            String startDateISO = new SimpleDateFormat(Constants.DATE_FORMAT_MONGO_DB, Locale.getDefault()).format(new Date(startDate));
+            String endDateISO = new SimpleDateFormat(Constants.DATE_FORMAT_MONGO_DB, Locale.getDefault()).format(new Date(endDate));
+
+            Log.d("AdminRevenueFragment", "startDate: " + startDateISO);
+            Log.d("AdminRevenueFragment", "endDate: " + endDateISO);
+
+            adminService.getRevenueStatistics(token, startDateISO, endDateISO).enqueue(new Callback<List<RevenueResponse>>() {
                 @Override
                 public void onResponse(Call<List<RevenueResponse>> call, Response<List<RevenueResponse>> response) {
                     if (response.isSuccessful()) {
                         List<RevenueResponse> revenueList = response.body();
                         if (revenueList != null) {
+                            Log.d("AdminRevenueFragment", "Revenue list: " + revenueList.toString());
                             displayChart(revenueList);
                         }
                     } else {
@@ -152,5 +173,4 @@ public class AdminRevenueFragment extends Fragment {
         binding.barChart.setFitBars(true);
         binding.barChart.invalidate();
     }
-
 }

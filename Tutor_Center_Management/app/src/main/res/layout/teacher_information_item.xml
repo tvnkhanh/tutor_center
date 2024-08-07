@@ -61,7 +61,7 @@
                 android:textColor="@color/app_text_body_text_color" />
 
             <TextView
-                android:id="@+id/tvLocation"
+                android:id="@+id/tvGraduationYear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Uttara, Sector 06, Dhaka"

@@ -5,17 +5,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.Calendar;
 import java.util.Date;
 
-import ptit.tvnkhanh.tutor_center_management.models.Client;
-import ptit.tvnkhanh.tutor_center_management.models.Tutor;
-
 public class RevenueResponse {
     @SerializedName("classId")
     private String classId;
     @SerializedName("clientId")
-    private Client client;
+    private String clientId;
     @SerializedName("tutorId")
-    private Tutor tutor;
-    @SerializedName("revenue")
+    private String tutorId;
+    @SerializedName("amount")
     private double revenue;
     @SerializedName("paymentDate")
     private Date paymentDate;
@@ -23,10 +20,10 @@ public class RevenueResponse {
     public RevenueResponse() {
     }
 
-    public RevenueResponse(String classId, Client client, Tutor tutor, double revenue, Date paymentDate) {
+    public RevenueResponse(String classId, String clientId, String tutorId, double revenue, Date paymentDate) {
         this.classId = classId;
-        this.client = client;
-        this.tutor = tutor;
+        this.clientId = clientId;
+        this.tutorId = tutorId;
         this.revenue = revenue;
         this.paymentDate = paymentDate;
     }
@@ -39,20 +36,20 @@ public class RevenueResponse {
         this.classId = classId;
     }
 
-    public Client getClient() {
-        return client;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
-    public Tutor getTutor() {
-        return tutor;
+    public String getTutorId() {
+        return tutorId;
     }
 
-    public void setTutor(Tutor tutor) {
-        this.tutor = tutor;
+    public void setTutorId(String tutorId) {
+        this.tutorId = tutorId;
     }
 
     public double getRevenue() {
@@ -74,6 +71,6 @@ public class RevenueResponse {
     public String getMonth() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(paymentDate);
-        return String.valueOf(calendar.get(Calendar.MONTH) + 1);
+        return String.format("%02d", calendar.get(Calendar.MONTH) + 1);
     }
 }

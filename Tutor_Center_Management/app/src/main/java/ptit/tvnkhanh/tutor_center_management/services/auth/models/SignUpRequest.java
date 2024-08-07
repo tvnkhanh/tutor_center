@@ -7,12 +7,24 @@ public class SignUpRequest {
     private String username;
     @SerializedName("passwordHash")
     private String passwordHash;
+    @SerializedName("tutorId")
+    private String tutorId;
+    @SerializedName("clientId")
+    private String clientId;
+    @SerializedName("staffId")
+    private String staffId;
     @SerializedName("roleId")
     private String roleId;
 
-    public SignUpRequest(String username, String passwordHash, String roleId) {
+    public SignUpRequest() {
+    }
+
+    public SignUpRequest(String username, String passwordHash, String tutorId, String clientId, String staffId, String roleId) {
         this.username = username;
         this.passwordHash = passwordHash;
+        this.tutorId = tutorId;
+        this.clientId = clientId;
+        this.staffId = staffId;
         this.roleId = roleId;
     }
 
@@ -30,6 +42,30 @@ public class SignUpRequest {
 
     public void setPasswordHash(String passwordHash) {
         this.passwordHash = passwordHash;
+    }
+
+    public String getTutorId() {
+        return tutorId;
+    }
+
+    public void setTutorId(String tutorId) {
+        this.tutorId = tutorId;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    public String getStaffId() {
+        return staffId;
+    }
+
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
     }
 
     public String getRoleId() {

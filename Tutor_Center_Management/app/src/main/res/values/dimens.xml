@@ -29,6 +29,7 @@
 
     <dimen name="app_margin_bottom_1">20dp</dimen>
     <dimen name="app_margin_bottom_2">8dp</dimen>
+    <dimen name="app_margin_bottom_3">10dp</dimen>
 
     <dimen name="app_margin_end_1">8dp</dimen>
 

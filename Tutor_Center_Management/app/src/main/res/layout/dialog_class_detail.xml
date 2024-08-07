@@ -26,7 +26,6 @@
                 android:id="@+id/ivTutorImage"
                 android:layout_width="@dimen/app_avatar_size_3"
                 android:layout_height="@dimen/app_avatar_size_3"
-                android:src="@drawable/ic_profile"
                 android:layout_gravity="center"/>
 
             <TextView
@@ -39,10 +38,18 @@
                 android:textColor="@color/app_text_heading_color"/>
 
             <TextView
-                android:id="@+id/tvTutorName"
+                android:id="@+id/tvClassId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/app_margin_top_1"
+                android:text="@string/detail_class_id"
+                android:textSize="@dimen/app_fontsize_14"
+                android:textColor="@color/app_text_body_text_color"/>
+
+            <TextView
+                android:id="@+id/tvTutorName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/detail_class_screen_name"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
@@ -108,6 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/detail_class_screen_subjects"
+                android:layout_marginBottom="@dimen/app_margin_bottom_3"
                 android:textSize="@dimen/app_fontsize_14"
                 android:textColor="@color/app_text_body_text_color"/>
 

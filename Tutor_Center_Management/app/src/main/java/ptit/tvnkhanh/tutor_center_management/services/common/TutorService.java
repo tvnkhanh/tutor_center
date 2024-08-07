@@ -3,10 +3,13 @@ package ptit.tvnkhanh.tutor_center_management.services.common;
 import java.util.List;
 
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
+import ptit.tvnkhanh.tutor_center_management.services.common.models.TutorRequest;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface TutorService {
@@ -18,4 +21,16 @@ public interface TutorService {
 
     @GET("/api/get-tutor")
     Call<Tutor> getTutorById(@Header(Constants.X_AUTH_TOKEN) String token, @Query("tutorId") String id);
+
+    @GET("/api/search-tutor")
+    Call<List<Tutor>> searchTutor(@Header(Constants.X_AUTH_TOKEN) String token, @Query("q") String tutorName);
+
+    @GET("/api/search-tutor-contact")
+    Call<List<Tutor>> searchTutorByContact(@Header(Constants.X_AUTH_TOKEN) String token, @Query("q") String contactNumber);
+
+    @POST("/api/tutor")
+    Call<Tutor> createTutor(@Body TutorRequest tutor);
+
+    @GET("/api/tutor-id")
+    Call<String> getTutorId(@Query("contactNumber") String contactNumber);
 }

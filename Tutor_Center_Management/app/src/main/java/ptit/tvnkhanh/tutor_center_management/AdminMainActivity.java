@@ -26,9 +26,13 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.List;
+
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivityAdminMainBinding;
 import ptit.tvnkhanh.tutor_center_management.databinding.DialogExitAppConfirmBinding;
+import ptit.tvnkhanh.tutor_center_management.models.Subject;
+import ptit.tvnkhanh.tutor_center_management.util.Utility;
 import ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar;
 
 public class AdminMainActivity extends AppCompatActivity implements OnNavigationListener, NavigationBarView.OnItemSelectedListener,
@@ -69,6 +73,19 @@ public class AdminMainActivity extends AppCompatActivity implements OnNavigation
         };
 
         getOnBackPressedDispatcher().addCallback(this, callback);
+
+        Utility.fetchAllReasons();
+        Utility.loadAllSubjects(new Utility.SubjectCallback() {
+            @Override
+            public void onSuccess(List<Subject> subjects) {
+
+            }
+
+            @Override
+            public void onFailure(String errorMessage) {
+
+            }
+        });
 
         setContentView(binding.getRoot());
     }

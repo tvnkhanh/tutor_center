@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:background="@drawable/background_card_item">
+
+        <EditText
+            android:id="@+id/edtStudentInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_1"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textMultiLine"/>
+
+        <EditText
+            android:id="@+id/edtSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_7"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textNoSuggestions"/>
+
+        <EditText
+            android:id="@+id/edtSalary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_2"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="numberDecimal"/>
+
+        <EditText
+            android:id="@+id/edtForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_3"
+            android:drawableEnd="@drawable/ic_expand_arrow"
+            android:textSize="@dimen/app_fontsize_14"
+            android:focusable="false"
+            android:enabled="true"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textNoSuggestions"/>
+
+        <EditText
+            android:id="@+id/edtAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_4"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textNoSuggestions"/>
+
+        <EditText
+            android:id="@+id/edtSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_5_default"
+            android:drawableEnd="@drawable/ic_expand_arrow"
+            android:textSize="@dimen/app_fontsize_14"
+            android:focusable="false"
+            android:enabled="true"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textNoSuggestions"/>
+
+        <EditText
+            android:id="@+id/edtRequirement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/app_margin_top_1"
+            style="@style/CustomEditTextStyle"
+            android:hint="@string/hire_tutor_screen_edt_hint_6"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:inputType="textMultiLine"/>
+    </LinearLayout>
+</layout>
