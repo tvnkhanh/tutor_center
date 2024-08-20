@@ -1,5 +1,7 @@
 package ptit.tvnkhanh.tutor_center_management.services.admin;
 
+import androidx.annotation.Nullable;
+
 import java.util.List;
 
 import ptit.tvnkhanh.tutor_center_management.models.Staff;
@@ -8,7 +10,7 @@ import ptit.tvnkhanh.tutor_center_management.models.TutoringClass;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.RevenueResponse;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StatusRequest;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StaffResponse;
-import ptit.tvnkhanh.tutor_center_management.services.common.models.ReasonRequest;
+import ptit.tvnkhanh.tutor_center_management.services.admin.models.ReasonRequest;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -40,9 +42,12 @@ public interface AdminService {
     @POST("/api/create-reason")
     Call<ReasonRequest> createReason(@Body ReasonRequest reasonRequest);
 
-    @DELETE("/api/delete-reason/{classId}")
-    Call<Void> deleteReason(@Path("classId") String classId);
+    @DELETE("/api/delete-reason")
+    Call<Void> deleteReason(@Query("classId") String classId, @Query("tutorId") String tutorId);
 
     @GET("/api/get-reason")
-    Call<List<ReasonRequest>> getReasons();
+    Call<List<ReasonRequest>> getReasons(
+            @Query("classId") @Nullable String classId,
+            @Query("tutorId") @Nullable String tutorId
+    );
 }

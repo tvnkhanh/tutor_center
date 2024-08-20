@@ -10,6 +10,8 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface TutorService {
@@ -21,6 +23,9 @@ public interface TutorService {
 
     @GET("/api/get-tutor")
     Call<Tutor> getTutorById(@Header(Constants.X_AUTH_TOKEN) String token, @Query("tutorId") String id);
+
+    @PUT("api/tutors/{id}")
+    Call<Tutor> updateTutor(@Path("id") String id, @Body TutorRequest tutorRequest);
 
     @GET("/api/search-tutor")
     Call<List<Tutor>> searchTutor(@Header(Constants.X_AUTH_TOKEN) String token, @Query("q") String tutorName);

@@ -65,7 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/app_margin_1"
-            android:text="@string/classes_screen_student_info"
+            android:text="@string/classes_screen_class_id"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
             android:maxLines="2"

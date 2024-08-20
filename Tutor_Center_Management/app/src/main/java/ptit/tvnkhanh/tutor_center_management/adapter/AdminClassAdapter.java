@@ -3,6 +3,7 @@ package ptit.tvnkhanh.tutor_center_management.adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -67,24 +68,34 @@ public class AdminClassAdapter extends RecyclerView.Adapter<AdminClassAdapter.Vi
             if (classItem.getTutorId() != null) {
                 tutors = String.join(", ", classItem.getTutorId());
             }
+            List<String> schedule;
+            String scheduleString = "";
+            if (classItem.getSchedule() != null) {
+                schedule = classItem.getSchedule();
+                scheduleString = String.join(", ", schedule);
+            }
             binding.setIsCompleted(false);
+            binding.tvTutor.setVisibility(View.GONE);
             if (Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_REJECTED)) {
                 binding.setIsCompleted(true);
             } else if (Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_PENDING)) {
                 binding.setStatus(Constants.CLASS_STATUS_APPROVED_BUTTON);
             } else if (Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_APPROVED)) {
                 binding.setStatus(Constants.CLASS_STATUS_ASSIGNED_BUTTON);
+                binding.tvTutor.setVisibility(View.VISIBLE);
             } else if (Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_ASSIGNED)) {
                 binding.setStatus(Constants.CLASS_STATUS_COMPLETED_BUTTON);
+                binding.tvTutor.setVisibility(View.VISIBLE);
             } else if (Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_COMPLETED)) {
                 binding.setIsCompleted(true);
+                binding.tvTutor.setVisibility(View.VISIBLE);
             }
             binding.setIsPending(Objects.equals(classItem.getStatus(), Constants.CLASS_STATUS_PENDING));
             binding.tvClassId.setText(Utility.boldText(context.getString(R.string.classes_screen_class_id, classItem.get_id())));
             binding.tvStatus.setText(Utility.boldText(context.getString(R.string.classes_screen_status, classItem.getStatus())));
             binding.tvStudentInfo.setText(Utility.boldText(context.getString(R.string.classes_screen_student_info, classItem.getStudentInfo())));
             binding.tvSubject.setText(Utility.boldText(context.getString(R.string.classes_screen_subject, subjects)));
-            binding.tvSchedule.setText(Utility.boldText(context.getString(R.string.classes_screen_schedule, classItem.getSchedule())));
+            binding.tvSchedule.setText(Utility.boldText(context.getString(R.string.classes_screen_schedule, scheduleString)));
             binding.tvForm.setText(Utility.boldText(context.getString(R.string.classes_screen_form, classItem.getForm())));
             binding.tvAddress.setText(Utility.boldText(context.getString(R.string.classes_screen_address, classItem.getAddress())));
             binding.tvSalary.setText(Utility.boldText(context.getString(R.string.classes_screen_salary, Utility.formatNumber(Integer.parseInt(classItem.getSalary())))));

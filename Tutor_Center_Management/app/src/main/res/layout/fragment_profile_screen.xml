@@ -45,7 +45,7 @@
                 android:id="@+id/tvId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ID: 11542556"
+                android:text="@string/profile_screen_id"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center" />
 
@@ -54,7 +54,7 @@
                 android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mail: humayunk@gmail.com"
+                android:text="@string/profile_screen_email"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center" />
 
@@ -63,7 +63,27 @@
                 android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Address: SPCBL, Gazipur, BD"
+                android:text="@string/profile_screen_address"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_screen_status"
+                android:visibility="gone"
+                android:textColor="@android:color/white"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/tvReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/profile_screen_reason"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:visibility="gone"
                 android:textColor="@android:color/white"
                 android:layout_gravity="center" />
         </LinearLayout>

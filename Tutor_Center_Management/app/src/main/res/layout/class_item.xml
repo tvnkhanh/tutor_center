@@ -21,6 +21,10 @@
         <variable
             name="isRegistered"
             type="Boolean" />
+
+        <variable
+            name="isHasPermission"
+            type="Boolean" />
     </data>
 
     <LinearLayout
@@ -155,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="@dimen/app_margin_1"
-            android:enabled="@{isTutor &amp;&amp; isNotActive &amp;&amp; !isRegistered}"
+            android:enabled="@{isTutor &amp;&amp; isNotActive &amp;&amp; !isRegistered &amp;&amp; isHasPermission}"
             android:text="@string/classes_screen_button_register"
             android:visibility="@{isTutor ? View.VISIBLE : View.GONE}" />
     </LinearLayout>

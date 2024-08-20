@@ -250,11 +250,12 @@ classRouter.get("/api/search-class", auth, async (req, res) => {
 });
 
 classRouter.post('/api/create-reason', async (req, res) => {
-  const { classId, reason } = req.body;
+  const { classId, tutorId, reason } = req.body;
 
   try {
       const newReason = new Reason({
           classId,
+          tutorId,
           reason
       });
 
@@ -265,12 +266,16 @@ classRouter.post('/api/create-reason', async (req, res) => {
   }
 });
 
-classRouter.delete('/api/delete-reason/:classId', async (req, res) => {
-  const classId = req.params.classId;
+classRouter.delete('/api/delete-reason', async (req, res) => {
+  const { classId, tutorId } = req.body;
 
   try {
-      const deletedReason = await Reason.findOneAndDelete({ classId });
-      
+      const query = {};
+      if (classId) query.classId = classId;
+      if (tutorId) query.tutorId = tutorId;
+
+      const deletedReason = await Reason.findOneAndDelete(query);
+
       if (!deletedReason) {
           return res.status(404).json({ message: 'Reason not found' });
       }
@@ -282,14 +287,20 @@ classRouter.delete('/api/delete-reason/:classId', async (req, res) => {
 });
 
 classRouter.get('/api/get-reason', async (req, res) => {
-  try {
-      const reason = await Reason.find();
+  const { classId, tutorId } = req.query;
 
-      if (!reason) {
+  try {
+      let filter = {};
+      if (classId) filter.classId = classId;
+      if (tutorId) filter.tutorId = tutorId;
+
+      const reasons = await Reason.find(filter);
+
+      if (reasons.length === 0) {
           return res.status(404).json({ message: 'Reason not found' });
       }
 
-      res.json(reason);
+      res.json(reasons);
   } catch (err) {
       res.status(500).json({ message: err.message });
   }

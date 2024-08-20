@@ -41,4 +41,10 @@
         android:label="SearchScreenFragment"
         tools:layout="@layout/fragment_search_screen"/>
 
+    <fragment
+        android:id="@+id/editProfile2"
+        android:name="ptit.tvnkhanh.tutor_center_management.view.EditProfile"
+        android:label="EditProfile"
+        tools:layout="@layout/fragment_edit_profile"/>
+
 </navigation>

@@ -56,14 +56,32 @@
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <TextView
-                    android:id="@+id/tvSearchHeader"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/app_fontsize_16"
-                    android:textColor="@color/app_text_heading_color"
-                    android:textStyle="bold"
-                    android:layout_marginTop="@dimen/app_margin_top_2"/>
+                    android:layout_marginTop="@dimen/app_margin_top_2">
+
+                    <TextView
+                        android:id="@+id/tvSearchHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/app_fontsize_16"
+                        android:textColor="@color/app_text_heading_color"
+                        android:textStyle="bold"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/spinner"
+                        app:layout_constraintBottom_toBottomOf="@id/spinner"/>
+
+                    <ptit.tvnkhanh.tutor_center_management.view.custom.CustomSpinner
+                        android:id="@+id/spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/app_margin_top_2"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintWidth_percent="0.5"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvContainer"

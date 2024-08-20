@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Constants {
     // URL
-    public static final String BASE_URL = "http://192.168.1.35:3000/";
+    public static final String BASE_URL = "http://10.252.2.104:3000/";
 
     public static final String DATE_FORMAT_MONGO_DB = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
@@ -21,6 +21,7 @@ public class Constants {
     public static final String NAVIGATION_COURSES = "COURSES";
     public static final String NAVIGATION_STATISTICS = "STATISTICS";
     public static final String NAVIGATION_PROFILE = "PROFILE";
+    public static final String NAVIGATION_EDIT_PROFILE = "EDIT_PROFILE";
     public static final String NAVIGATION_TEACHER_DETAIL = "TEACHER_DETAIL";
     public static final String NAVIGATION_HIRE_TUTOR_DETAIL = "NAVIGATION_HIRE_TUTOR_DETAIL";
     public static final String NAVIGATION_PAYMENT = "NAVIGATION_PAYMENT";

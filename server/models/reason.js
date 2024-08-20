@@ -6,6 +6,10 @@ const reasonSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Class'
     },
+    tutorId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Tutor'
+    },
     reason: {
         type: String,
         required: true

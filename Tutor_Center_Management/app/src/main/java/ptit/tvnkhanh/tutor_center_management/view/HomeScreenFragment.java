@@ -144,12 +144,22 @@ public class HomeScreenFragment extends Fragment {
         // Hard code for UI screenshots
         binding.classes.setIsTutor(Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_TUTOR_ID));
         binding.classes.setIsNotActive(true);
-        binding.classes.tvStatus.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_status, "inactive")));
+        binding.classes.tvClassId.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_class_id, "66aa4843258475752f632c4a")));
+        binding.classes.tvStatus.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_status, Constants.CLASS_STATUS_APPROVED)));
         binding.classes.tvStudentInfo.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_student_info, "Học sinh lớp 8")));
         binding.classes.tvSubject.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_subject, "[Physics]")));
         binding.classes.tvSchedule.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_schedule, "Sáng thứ 4")));
         binding.classes.tvForm.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_form, Constants.CLASS_FORM_ONLINE)));
         binding.classes.tvAddress.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_address, "201 Than Nhan Trung, Tan Binh, HCM")));
         binding.classes.tvSalary.setText(Utility.boldText(requireActivity().getString(R.string.classes_screen_salary, Utility.formatNumber(3200000))));
+
+        binding.tvSeeAllTeachers.setOnClickListener(view -> {
+            navigationListener.setOnNavigationDestination(Constants.NAVIGATION_TUTORS);
+            ((MainActivity) requireActivity()).setSelectedItemBottomBar();
+        });
+        binding.tvSeeAllClasses.setOnClickListener(view -> {
+            navigationListener.setOnNavigationDestination(Constants.NAVIGATION_CLASSES);
+            ((MainActivity) requireActivity()).setSelectedItemBottomBar();
+        });
     }
 }

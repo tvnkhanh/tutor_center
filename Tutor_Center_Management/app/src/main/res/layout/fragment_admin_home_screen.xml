@@ -139,6 +139,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvSeeAllTeachers"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -166,6 +167,7 @@
                         android:textStyle="bold"/>
 
                     <TextView
+                        android:id="@+id/tvSeeAllClasses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -173,6 +175,10 @@
                         android:textSize="@dimen/app_fontsize_14"
                         android:textColor="@color/app_primary_color" />
                 </RelativeLayout>
+
+                <include
+                    android:id="@+id/classes"
+                    layout="@layout/admin_class_item"/>
             </LinearLayout>
         </ScrollView>
 

@@ -158,17 +158,22 @@ public class CourseScreenFragment extends Fragment implements ClassAdapter.OnReg
                     TutoringClass updatedTutoringClass = response.body();
                     if (updatedTutoringClass != null) {
                         Log.d("CourseScreenFragment", "Class updated successfully");
+                        Utility.showToast(requireContext(), "Class updated successfully");
                         getClassesDataByAccount();
                     }
+                } else {
+                    Log.d("CourseScreenFragment", "Failed to update class");
+                    Utility.showToast(requireContext(), "Failed to update class");
                 }
             }
 
             @Override
             public void onFailure(Call<TutoringClass> call, Throwable throwable) {
                 Log.d("CourseScreenFragment", "Error: " + throwable.getMessage());
+                Utility.showToast(requireContext(), "Error: " + throwable.getMessage());
             }
         });
-        adminService.deleteReason(tutoringClass.get_id()).enqueue(new Callback<Void>() {
+        adminService.deleteReason(tutoringClass.get_id(), null).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 if (response.isSuccessful()) {

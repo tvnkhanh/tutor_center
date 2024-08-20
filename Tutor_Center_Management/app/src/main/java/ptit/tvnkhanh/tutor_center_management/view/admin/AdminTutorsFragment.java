@@ -27,6 +27,7 @@ import ptit.tvnkhanh.tutor_center_management.databinding.FragmentAdminTutorsBind
 import ptit.tvnkhanh.tutor_center_management.models.Tutor;
 import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
+import ptit.tvnkhanh.tutor_center_management.services.admin.models.ReasonRequest;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StatusRequest;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
@@ -151,16 +152,19 @@ public class AdminTutorsFragment extends Fragment implements AdminTutorAdapter.O
                             public void onResponse(Call<Tutor> call, Response<Tutor> response) {
                                 if (response.isSuccessful()) {
                                     Log.d("AdminTutorsFragment", "onResponse: " + response.body());
+                                    Utility.showToast(requireContext(), "Tutor approved successfully");
                                     getTutors();
                                 } else {
                                     Log.d("AdminTutorsFragment", "onResponse: " + response.code());
                                     Log.d("AdminTutorsFragment", "onResponse: " + response.errorBody());
+                                    Utility.showToast(requireContext(), "Tutor approved failed");
                                 }
                             }
 
                             @Override
                             public void onFailure(Call<Tutor> call, Throwable throwable) {
                                 Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
+                                Utility.showToast(requireContext(), "Tutor approved failed");
                             }
                         });
                     }
@@ -181,23 +185,24 @@ public class AdminTutorsFragment extends Fragment implements AdminTutorAdapter.O
                 new Utility.OnDialogWarningCallback() {
                     @Override
                     public void onConfirm() {
-                        adminService.updateTutorStatus(token, tutor.get_id(), new StatusRequest(Constants.TUTOR_STATUS_REJECTED)).enqueue(new Callback<Tutor>() {
-                            @Override
-                            public void onResponse(Call<Tutor> call, Response<Tutor> response) {
-                                if (response.isSuccessful()) {
-                                    Log.d("AdminTutorsFragment", "onResponse: " + response.body());
-                                    getTutors();
-                                } else {
-                                    Log.d("AdminTutorsFragment", "onResponse: " + response.code());
-                                    Log.d("AdminTutorsFragment", "onResponse: " + response.errorBody());
-                                }
-                            }
+                        Utility.showInputReasonDialog(requireContext(),
+                                "Reject Tutor",
+                                "Please provide a reason for rejecting this tutor",
+                                "Reject", "Cancel",
+                                new Utility.InputReasonCallback() {
+                                    @Override
+                                    public void onConfirm(String reason) {
+                                        binding.progressBar.setVisibility(View.VISIBLE);
+                                        ReasonRequest reasonRequest = new ReasonRequest(null, tutor.get_id(), reason);
+                                        handleRejectTutor(tutor);
+                                        createReason(reasonRequest);
+                                    }
 
-                            @Override
-                            public void onFailure(Call<Tutor> call, Throwable throwable) {
-                                Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
-                            }
-                        });
+                                    @Override
+                                    public void onCancel() {
+
+                                    }
+                                });
                     }
 
                     @Override
@@ -210,5 +215,46 @@ public class AdminTutorsFragment extends Fragment implements AdminTutorAdapter.O
     @Override
     public void onTutorDetailClick(Tutor tutor) {
         Utility.showTutorDetailDialog(requireContext(), tutor);
+    }
+
+    private void handleRejectTutor(Tutor tutor) {
+        adminService.updateTutorStatus(token, tutor.get_id(), new StatusRequest(Constants.TUTOR_STATUS_REJECTED)).enqueue(new Callback<Tutor>() {
+            @Override
+            public void onResponse(Call<Tutor> call, Response<Tutor> response) {
+                if (response.isSuccessful()) {
+                    Log.d("AdminTutorsFragment", "onResponse: " + response.body());
+                    Utility.showToast(requireContext(), "Tutor rejected successfully");
+                    getTutors();
+                } else {
+                    Log.d("AdminTutorsFragment", "onResponse: " + response.code());
+                    Log.d("AdminTutorsFragment", "onResponse: " + response.errorBody());
+                    Utility.showToast(requireContext(), "Tutor rejected failed");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Tutor> call, Throwable throwable) {
+                Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
+                Utility.showToast(requireContext(), "Tutor rejected failed");
+            }
+        });
+    }
+
+    private void createReason(ReasonRequest reasonRequest) {
+        adminService.createReason(reasonRequest).enqueue(new Callback<ReasonRequest>() {
+            @Override
+            public void onResponse(Call<ReasonRequest> call, Response<ReasonRequest> response) {
+                if (response.isSuccessful()) {
+                    Log.d("AdminTutorsFragment", "onResponse: " + response.body());
+                } else {
+                    Log.d("AdminTutorsFragment", "onResponse: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ReasonRequest> call, Throwable throwable) {
+                Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
+            }
+        });
     }
 }

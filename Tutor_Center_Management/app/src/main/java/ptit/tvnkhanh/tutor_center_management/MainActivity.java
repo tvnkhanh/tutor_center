@@ -1,5 +1,6 @@
 package ptit.tvnkhanh.tutor_center_management;
 
+import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_EDIT_PROFILE;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_PAYMENT;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_PROFILE;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_CLASSES;
@@ -10,9 +11,7 @@ import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_SE
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TUTORS;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,8 +20,6 @@ import android.view.WindowManager;
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.localbroadcastmanager.content.LocalBroadcastManager;
-import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -30,17 +27,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.List;
-import java.util.Objects;
 
 import ptit.tvnkhanh.tutor_center_management.callback.OnNavigationListener;
 import ptit.tvnkhanh.tutor_center_management.databinding.ActivityMainBinding;
 import ptit.tvnkhanh.tutor_center_management.databinding.DialogExitAppConfirmBinding;
-import ptit.tvnkhanh.tutor_center_management.models.Account;
-import ptit.tvnkhanh.tutor_center_management.models.Client;
-import ptit.tvnkhanh.tutor_center_management.models.Staff;
 import ptit.tvnkhanh.tutor_center_management.models.Subject;
-import ptit.tvnkhanh.tutor_center_management.models.Tutor;
-import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
 import ptit.tvnkhanh.tutor_center_management.services.auth.AuthService;
 import ptit.tvnkhanh.tutor_center_management.services.common.ClientService;
@@ -49,9 +40,6 @@ import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
 import ptit.tvnkhanh.tutor_center_management.util.Utility;
 import ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements OnNavigationListener, NavigationBarView.OnItemSelectedListener,
         CustomToolbar.OnBackPressListener {
@@ -103,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
 
 //        getUserData();
 
-        Utility.fetchAllReasons();
         Utility.loadAllSubjects(new Utility.SubjectCallback() {
             @Override
             public void onSuccess(List<Subject> subjects) {
@@ -159,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
                 break;
             case NAVIGATION_SEARCH:
                 navController.navigate(R.id.searchScreenFragment2);
+                setShowToolbar();
+                break;
+            case NAVIGATION_EDIT_PROFILE:
+                navController.navigate(R.id.editProfile);
                 setShowToolbar();
                 break;
             default:
@@ -217,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
         }
     }
 
-    private void setSelectedItemBottomBar() {
+    public void setSelectedItemBottomBar() {
         if (navController.getCurrentDestination() != null) {
             int id = navController.getCurrentDestination().getId();
             if (id == R.id.homeScreenFragment) {
@@ -249,6 +240,10 @@ public class MainActivity extends AppCompatActivity implements OnNavigationListe
             }
             if (id == R.id.searchScreenFragment2) {
                 binding.toolbar.setTitle(getString(R.string.search_screen_title));
+            }
+            if (id == R.id.editProfile) {
+//                binding.toolbar.setTitle(getString(R.string.profile_screen_title));
+                binding.toolbar.setTitle("Tutor Information");
             }
         }
     }

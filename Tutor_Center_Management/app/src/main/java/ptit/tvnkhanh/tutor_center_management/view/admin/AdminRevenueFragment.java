@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 
+import android.text.SpannableString;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,8 +27,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import ptit.tvnkhanh.tutor_center_management.R;
 import ptit.tvnkhanh.tutor_center_management.databinding.FragmentAdminRevenueBinding;
@@ -64,6 +67,7 @@ public class AdminRevenueFragment extends Fragment {
     }
 
     private void initUI() {
+        binding.tvTotalRevenue.setVisibility(View.GONE);
         binding.btnDateRangePicker.setOnClickListener(view -> {
             Calendar calendar = Calendar.getInstance();
             calendar.clear();
@@ -129,6 +133,9 @@ public class AdminRevenueFragment extends Fragment {
                         if (revenueList != null) {
                             Log.d("AdminRevenueFragment", "Revenue list: " + revenueList.toString());
                             displayChart(revenueList);
+
+                            double totalRevenue = calculateTotalRevenue(revenueList);
+                            updateTotalRevenue(totalRevenue);
                         }
                     } else {
                         Log.e("AdminRevenueFragment", "Error: " + response.code());
@@ -144,14 +151,27 @@ public class AdminRevenueFragment extends Fragment {
     }
 
     private void displayChart(List<RevenueResponse> responseList) {
+        Map<String, Float> monthlyRevenueMap = new HashMap<>();
+
+        for (RevenueResponse revenue : responseList) {
+            String month = revenue.getMonth() != null ? revenue.getMonth() : "Unknown";
+            float revenueAmount = (float) revenue.getRevenue();
+
+            if (monthlyRevenueMap.containsKey(month)) {
+                monthlyRevenueMap.put(month, monthlyRevenueMap.get(month) + revenueAmount);
+            } else {
+                monthlyRevenueMap.put(month, revenueAmount);
+            }
+        }
+
         List<BarEntry> entries = new ArrayList<>();
         List<String> labels = new ArrayList<>();
+        int index = 0;
 
-        for (int i = 0; i < responseList.size(); i++) {
-            RevenueResponse revenue = responseList.get(i);
-            entries.add(new BarEntry(i, (float) revenue.getRevenue()));
-            String month = revenue.getMonth() != null ? revenue.getMonth() : "Unknown";
-            labels.add(month);
+        for (Map.Entry<String, Float> entry : monthlyRevenueMap.entrySet()) {
+            entries.add(new BarEntry(index, entry.getValue()));
+            labels.add(entry.getKey());
+            index++;
         }
 
         BarDataSet dataSet = new BarDataSet(entries, "Revenue");
@@ -172,5 +192,19 @@ public class AdminRevenueFragment extends Fragment {
         binding.barChart.getAxisRight().setEnabled(false);
         binding.barChart.setFitBars(true);
         binding.barChart.invalidate();
+    }
+
+    private double calculateTotalRevenue(List<RevenueResponse> revenueList) {
+        double totalRevenue = 0.0;
+        for (RevenueResponse revenue : revenueList) {
+            totalRevenue += revenue.getRevenue();
+        }
+        return totalRevenue;
+    }
+
+    private void updateTotalRevenue(double totalRevenue) {
+        SpannableString formattedTotalRevenue = Utility.boldText(requireActivity().getString(R.string.revenue_total, Utility.formatNumber(totalRevenue)));
+        binding.tvTotalRevenue.setText(formattedTotalRevenue);
+        binding.tvTotalRevenue.setVisibility(View.VISIBLE);
     }
 }

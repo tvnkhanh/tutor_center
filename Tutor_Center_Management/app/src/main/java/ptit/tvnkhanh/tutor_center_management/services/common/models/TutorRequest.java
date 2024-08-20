@@ -18,11 +18,12 @@ public class TutorRequest {
     private String teachingTime;
     private String citizenId;
     private List<String> subjectIds;
+    private String status;
 
     public TutorRequest() {
     }
 
-    public TutorRequest(String _id, String firstName, String lastName, String dateOfBirth, String gender, String contactNumber, String email, List<String> portraitPhotos, String address, List<String> qualification, String experience, int graduationYear, String teachingTime, String citizenId, List<String> subjectIds) {
+    public TutorRequest(String _id, String firstName, String lastName, String dateOfBirth, String gender, String contactNumber, String email, List<String> portraitPhotos, String address, List<String> qualification, String experience, int graduationYear, String teachingTime, String citizenId, List<String> subjectIds, String status) {
         this._id = _id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,6 +39,7 @@ public class TutorRequest {
         this.teachingTime = teachingTime;
         this.citizenId = citizenId;
         this.subjectIds = subjectIds;
+        this.status = status;
     }
 
     public String get_id() {
@@ -158,5 +160,13 @@ public class TutorRequest {
 
     public void setSubjectIds(List<String> subjectIds) {
         this.subjectIds = subjectIds;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

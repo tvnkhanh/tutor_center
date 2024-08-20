@@ -15,7 +15,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,7 +33,6 @@ import ptit.tvnkhanh.tutor_center_management.models.Tutor;
 import ptit.tvnkhanh.tutor_center_management.models.TutoringClass;
 import ptit.tvnkhanh.tutor_center_management.services.RetrofitClient;
 import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
-import ptit.tvnkhanh.tutor_center_management.services.admin.models.StatusRequest;
 import ptit.tvnkhanh.tutor_center_management.services.common.ClassService;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
@@ -88,15 +89,37 @@ public class SearchScreenFragment extends Fragment {
 
     private void initUI() {
         binding.tvSearchHeader.setText(getString(R.string.search_screen_type, selectedItem));
+        initSpinnerData();
+        binding.spinner.setSelection(0);
         binding.llFilter.setOnClickListener(view -> {
             Utility.hideKeyboard(requireActivity());
             Utility.clearEditTextFocus(requireActivity());
             Utility.showItemDialog(requireActivity(), Constants.SEARCH_TYPE_LIST, position -> {
                 selectedItem = Constants.SEARCH_TYPE_LIST.get(position);
                 binding.tvSearchHeader.setText(getString(R.string.search_screen_type, selectedItem));
+                initSpinnerData();
                 Log.d("selectedItem", selectedItem);
+                search(binding.edtSearch.getText().toString());
             }, "type", Constants.SEARCH_TYPE_LIST.indexOf(selectedItem));
         });
+
+        binding.spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if ((selectedItem.equals(Constants.SEARCH_TYPE_CLASS) && classes != null) ||
+                        (selectedItem.equals(Constants.SEARCH_TYPE_TUTOR) && tutors != null)) {
+                    filterResultsByStatus(binding.spinner.getSelectedItem().toString());
+                } else {
+                    Log.d("SearchScreenFragment", "Classes or Tutors list is null");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                // Do nothing
+            }
+        });
+
         binding.edtSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -115,208 +138,99 @@ public class SearchScreenFragment extends Fragment {
         });
     }
 
-    private void initRecyclerView() {
+    private void initSpinnerData() {
+        if (selectedItem.equals(Constants.SEARCH_TYPE_CLASS) && (Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID))) {
+            binding.spinner.setData(Constants.CLASS_STATUS_LIST_REVERSE);
+        } else if (selectedItem.equals(Constants.SEARCH_TYPE_TUTOR) && (Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID))) {
+            binding.spinner.setData(Constants.TUTOR_STATUS_LIST);
+        } else if (selectedItem.equals(Constants.SEARCH_TYPE_TUTOR) && !(Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID))) {
+            binding.spinner.setVisibility(View.GONE);
+        } else if (selectedItem.equals(Constants.SEARCH_TYPE_CLASS) && !(Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID))) {
+            binding.spinner.setData(Constants.CLASS_STATUS_LIST_USER);
+        }
+    }
+
+    private void onSearchDone() {
         binding.progressBar.setVisibility(View.GONE);
+    }
+
+    private void updateRecyclerViewWithClasses(List<TutoringClass> filteredClasses) {
         RecyclerView recyclerView = binding.rvContainer;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        if (selectedItem.equals(Constants.SEARCH_TYPE_CLASS)) {
-            classes.sort((o1, o2) -> {
-                int index1 = Constants.CLASS_STATUS_LIST_REVERSE.indexOf(o1.getStatus());
-                int index2 = Constants.CLASS_STATUS_LIST_REVERSE.indexOf(o2.getStatus());
-                return Integer.compare(index1, index2);
-            });
-            classes.removeIf(tutoringClass -> tutoringClass.getStatus().equals(Constants.CLASS_STATUS_COMPLETED) || tutoringClass.getStatus().equals(Constants.CLASS_STATUS_REJECTED));
-            if (!Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID)) {
-                recyclerView.setAdapter(new ClassAdapter(classes, requireContext(), Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_TUTOR_ID), new ClassAdapter.OnRegisterClickListener() {
-                    @Override
-                    public void onRegisterClick(String classId) {
-                        Utility.showConfirmationDialog(requireContext(),
-                                "Register class",
-                                "Are you sure you want to register this class?",
-                                "Register", "Cancel",
-                                new Utility.OnDialogWarningCallback() {
-                                    @Override
-                                    public void onConfirm() {
-                                        tutorRegister(classId);
-                                    }
+        if (Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID)) {
+            recyclerView.setAdapter(new AdminClassAdapter(requireContext(), filteredClasses, new AdminClassAdapter.OnAdminClassClickListener() {
+                @Override
+                public void onChangeStatusClick(TutoringClass classItem) {
 
-                                    @Override
-                                    public void onCancel() {
+                }
 
-                                    }
-                                });
-                    }
+                @Override
+                public void onRejectedClick(TutoringClass classItem) {
 
-                    @Override
-                    public void onClassItemClicked(TutoringClass tutoringClass) {
-                        Utility.showClassDetailDialog(requireContext(), tutoringClass);
-                    }
+                }
 
-                    @Override
-                    public void onEditClick(TutoringClass tutoringClass) {
+                @Override
+                public void onClassItemDetailClick(TutoringClass classItem) {
 
-                    }
-                }));
-            } else {
-                recyclerView.setAdapter(new AdminClassAdapter(requireContext(), classes, new AdminClassAdapter.OnAdminClassClickListener() {
-                    @Override
-                    public void onChangeStatusClick(TutoringClass classItem) {
-                        Utility.showConfirmationDialog(requireContext(),
-                                "Change status",
-                                "Are you sure you want to change status of this class?",
-                                "Yes", "No",
-                                new Utility.OnDialogWarningCallback() {
-                                    @Override
-                                    public void onConfirm() {
-                                        if (!classItem.getTutorId().isEmpty()) {
-                                            binding.progressBar.setVisibility(View.VISIBLE);
-                                            StatusRequest statusRequest = new StatusRequest();
-                                            if (classItem.getStatus().equals(Constants.CLASS_STATUS_PENDING)) {
-                                                statusRequest.setStatus(Constants.CLASS_STATUS_APPROVED);
-                                            } else if (classItem.getStatus().equals(Constants.CLASS_STATUS_APPROVED)) {
-                                                statusRequest.setStatus(Constants.CLASS_STATUS_ASSIGNED);
-                                            } else if (classItem.getStatus().equals(Constants.CLASS_STATUS_ASSIGNED)) {
-                                                statusRequest.setStatus(Constants.CLASS_STATUS_COMPLETED);
-                                            }
-                                            adminService.updateClassStatus(token, classItem.get_id(), statusRequest).enqueue(new Callback<TutoringClass>() {
-                                                @Override
-                                                public void onResponse(Call<TutoringClass> call, Response<TutoringClass> response) {
-                                                    if (response.isSuccessful()) {
-                                                        Log.d("AdminClassesFragment", "onResponse: " + response.body());
-                                                        
-                                                    } else {
-                                                        Log.d("AdminClassesFragment", "onResponse: " + response.code());
-                                                    }
-                                                }
+                }
 
-                                                @Override
-                                                public void onFailure(Call<TutoringClass> call, Throwable throwable) {
-                                                    Log.d("AdminClassesFragment", "onFailure: " + throwable.getMessage());
-                                                }
-                                            });
-                                        } else {
-                                            Utility.showToast(requireContext(), "This class is not assigned to any tutor");
-                                        }
-                                    }
+                @Override
+                public void onEditClassClick(TutoringClass classItem) {
 
-                                    @Override
-                                    public void onCancel() {
-
-                                    }
-                                });
-                    }
-
-                    @Override
-                    public void onRejectedClick(TutoringClass classItem) {
-
-                    }
-
-                    @Override
-                    public void onClassItemDetailClick(TutoringClass classItem) {
-                        Utility.showClassDetailDialog(requireContext(), classItem);
-                    }
-
-                    @Override
-                    public void onEditClassClick(TutoringClass classItem) {
-
-                    }
-                }));
-            }
+                }
+            }));
         } else {
-            if (!Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID)) {
-                tutors.removeIf(tutor -> tutor.getStatus().equals(Constants.TUTOR_STATUS_PENDING));
-                recyclerView.setAdapter(new TutorAdapter(tutors, requireContext(), Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_CLIENT_ID), new TutorAdapter.OnTutorClickListener() {
-                    @Override
-                    public void onHireClicked() {
-                        navigationListener.setOnNavigationDestination(Constants.NAVIGATION_HIRE_TUTOR_DETAIL);
-                    }
+            recyclerView.setAdapter(new ClassAdapter(filteredClasses, requireContext(), Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_TUTOR_ID), new ClassAdapter.OnRegisterClickListener() {
+                @Override
+                public void onRegisterClick(String classId) {
 
-                    @Override
-                    public void onTutorItemClicked(Tutor tutor) {
-                        Utility.showTutorDetailDialog(requireContext(), tutor);
-                    }
-                }));
-            } else {
-                tutors.removeIf(tutor -> tutor.getStatus().equals(Constants.TUTOR_STATUS_APPROVED));
-                recyclerView.setAdapter(new AdminTutorAdapter(tutors, requireContext(), new AdminTutorAdapter.OnTutorItemClickListener() {
-                    @Override
-                    public void onApproveClick(Tutor tutor) {
-                        Utility.showConfirmationDialog(requireContext(),
-                                "Approve tutor",
-                                "Are you sure you want to approve this tutor?",
-                                "Approve", "Cancel",
-                                new Utility.OnDialogWarningCallback() {
-                                    @Override
-                                    public void onConfirm() {
-                                        adminService.updateTutorStatus(token, tutor.get_id(), new StatusRequest(Constants.TUTOR_STATUS_APPROVED)).enqueue(new Callback<Tutor>() {
-                                            @Override
-                                            public void onResponse(Call<Tutor> call, Response<Tutor> response) {
-                                                if (response.isSuccessful()) {
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.body());
-                                                    tutors.remove(tutor);
-                                                    recyclerView.getAdapter().notifyDataSetChanged();
-                                                    Utility.showToast(requireContext(), "Approve successfully!");
-                                                } else {
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.code());
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.errorBody());
-                                                }
-                                            }
+                }
 
-                                            @Override
-                                            public void onFailure(Call<Tutor> call, Throwable throwable) {
-                                                Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
-                                            }
-                                        });
-                                    }
+                @Override
+                public void onClassItemClicked(TutoringClass tutoringClass) {
 
-                                    @Override
-                                    public void onCancel() {
+                }
 
-                                    }
-                                });
-                    }
+                @Override
+                public void onEditClick(TutoringClass tutoringClass) {
 
-                    @Override
-                    public void onRejectClick(Tutor tutor) {
-                        Utility.showConfirmationDialog(requireContext(),
-                                "Reject tutor",
-                                "Are you sure you want to reject this tutor?",
-                                "Reject", "Cancel",
-                                new Utility.OnDialogWarningCallback() {
-                                    @Override
-                                    public void onConfirm() {
-                                        adminService.updateTutorStatus(token, tutor.get_id(), new StatusRequest(Constants.TUTOR_STATUS_REJECTED)).enqueue(new Callback<Tutor>() {
-                                            @Override
-                                            public void onResponse(Call<Tutor> call, Response<Tutor> response) {
-                                                if (response.isSuccessful()) {
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.body());
-                                                    recyclerView.getAdapter().notifyDataSetChanged();
-                                                } else {
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.code());
-                                                    Log.d("AdminTutorsFragment", "onResponse: " + response.errorBody());
-                                                }
-                                            }
+                }
+            }));
+        }
+    }
 
-                                            @Override
-                                            public void onFailure(Call<Tutor> call, Throwable throwable) {
-                                                Log.d("AdminTutorsFragment", "onFailure: " + throwable.getMessage());
-                                            }
-                                        });
-                                    }
+    private void updateRecyclerViewWithTutors(List<Tutor> filteredTutors) {
+        RecyclerView recyclerView = binding.rvContainer;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        if (Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_ADMIN_ID)) {
+            recyclerView.setAdapter(new AdminTutorAdapter(filteredTutors, requireContext(), new AdminTutorAdapter.OnTutorItemClickListener() {
+                @Override
+                public void onApproveClick(Tutor tutor) {
 
-                                    @Override
-                                    public void onCancel() {
+                }
 
-                                    }
-                                });
-                    }
+                @Override
+                public void onRejectClick(Tutor tutor) {
 
-                    @Override
-                    public void onTutorDetailClick(Tutor tutor) {
-                        Utility.showTutorDetailDialog(requireContext(), tutor);
-                    }
-                }));
-            }
+                }
+
+                @Override
+                public void onTutorDetailClick(Tutor tutor) {
+
+                }
+            }));
+        } else {
+            recyclerView.setAdapter(new TutorAdapter(filteredTutors, requireContext(), Objects.equals(userSession.getAccount().getRoleId(), Constants.ROLE_CLIENT_ID), new TutorAdapter.OnTutorClickListener() {
+                @Override
+                public void onHireClicked() {
+
+                }
+
+                @Override
+                public void onTutorItemClicked(Tutor tutor) {
+
+                }
+            }));
         }
     }
 
@@ -331,14 +245,17 @@ public class SearchScreenFragment extends Fragment {
                             classes = response.body();
                             if (classes != null) {
                                 Log.d("classes", classes.toString());
-                                initRecyclerView();
+                                filterResultsByStatus(binding.spinner.getSelectedItem().toString());
+                                onSearchDone();
                             }
                         }
+                        binding.progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailure(Call<List<TutoringClass>> call, Throwable throwable) {
-
+                        binding.progressBar.setVisibility(View.GONE);
+                        // Handle failure
                     }
                 });
             } else if (selectedItem.equals(Constants.SEARCH_TYPE_TUTOR)) {
@@ -349,17 +266,18 @@ public class SearchScreenFragment extends Fragment {
                             tutors = response.body();
                             if (tutors != null) {
                                 Log.d("tutors", tutors.toString());
-                                initRecyclerView();
-                            } else {
-                                Log.d("tutors", "null");
+                                filterResultsByStatus(binding.spinner.getSelectedItem().toString());
+                                onSearchDone();
                             }
                         } else {
                             Log.d("error", response.message());
                         }
+                        binding.progressBar.setVisibility(View.GONE);
                     }
 
                     @Override
                     public void onFailure(Call<List<Tutor>> call, Throwable throwable) {
+                        binding.progressBar.setVisibility(View.GONE);
                         Log.d("error", throwable.getMessage());
                     }
                 });
@@ -401,6 +319,26 @@ public class SearchScreenFragment extends Fragment {
                     Log.d("SearchScreenFragment", "Tutor registration failed with error: " + throwable.getMessage());
                 }
             });
+        }
+    }
+
+    private void filterResultsByStatus(String status) {
+        if (selectedItem.equals(Constants.SEARCH_TYPE_CLASS) && classes != null) {
+            List<TutoringClass> filteredClasses = new ArrayList<>();
+            for (TutoringClass tutoringClass : classes) {
+                if (tutoringClass.getStatus().equals(status)) {
+                    filteredClasses.add(tutoringClass);
+                }
+            }
+            updateRecyclerViewWithClasses(filteredClasses);
+        } else if (selectedItem.equals(Constants.SEARCH_TYPE_TUTOR) && tutors != null) {
+            List<Tutor> filteredTutors = new ArrayList<>();
+            for (Tutor tutor : tutors) {
+                if (tutor.getStatus().equals(status)) {
+                    filteredTutors.add(tutor);
+                }
+            }
+            updateRecyclerViewWithTutors(filteredTutors);
         }
     }
 

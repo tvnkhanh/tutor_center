@@ -23,6 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/payment_screen_status"
+            android:layout_marginBottom="@dimen/app_margin_bottom_2"
             android:layout_gravity="center"
             android:textSize="@dimen/app_fontsize_16"
             android:textStyle="bold"
@@ -77,6 +78,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/payment_screen_address"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvSalary"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_screen_salary"
+            android:textSize="@dimen/app_fontsize_14"
+            android:textColor="@color/app_text_body_text_color"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:id="@+id/tvFeePercent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/payment_screen_fee_percent"
             android:textSize="@dimen/app_fontsize_14"
             android:textColor="@color/app_text_body_text_color"
             android:maxLines="2"

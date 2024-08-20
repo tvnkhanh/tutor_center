@@ -1,6 +1,7 @@
 package ptit.tvnkhanh.tutor_center_management.adapter;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -63,10 +64,34 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
         public void bind(TutoringClass tutoringClass) {
             UserSession userSession = UserSession.getInstance();
             boolean isRegistered = false;
-            if (tutoringClass.getTutorId() != null && !tutoringClass.getTutorId().isEmpty() && userSession.getAccount().getRoleId().equals(Constants.ROLE_TUTOR_ID) && Objects.equals(tutoringClass.getStatus(), Constants.CLASS_STATUS_APPROVED)) {
+            boolean isHasPermission = false;
+            if (tutoringClass.getTutorId() != null
+                    && !tutoringClass.getTutorId().isEmpty()
+                    && userSession.getAccount().getRoleId().equals(Constants.ROLE_TUTOR_ID)
+                    && Objects.equals(tutoringClass.getStatus(), Constants.CLASS_STATUS_APPROVED)) {
+
                 isRegistered = tutoringClass.getTutorId().contains(userSession.getTutor().get_id());
             }
-            String reason = Utility.getReasonByClassId(tutoringClass.get_id());
+            if (userSession.getAccount().getRoleId().equals(Constants.ROLE_TUTOR_ID)
+                && Objects.equals(userSession.getTutor().getStatus(), Constants.CLASS_STATUS_APPROVED)) {
+
+                isHasPermission = true;
+            }
+            if (Objects.equals(tutoringClass.getStatus(), Constants.CLASS_STATUS_REJECTED)) {
+                Utility.fetchReason(tutoringClass.get_id(), null, new Utility.ReasonCallback() {
+                    @Override
+                    public void onSuccess(String reason) {
+                        ((Activity) context).runOnUiThread(() -> {
+                            binding.tvReason.setText(Utility.boldText(context.getString(R.string.classes_screen_reason, reason)));
+                        });
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        Utility.showToast(context, errorMessage);
+                    }
+                });
+            }
             List<String> schedule = tutoringClass.getSchedule();
             String scheduleString = String.join(", ", schedule);
             List<String> subjects = new ArrayList<>();
@@ -79,6 +104,7 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             String salaryString = Utility.formatNumber(salary);
             binding.setIsTutor(isTutor);
             binding.setIsRegistered(isRegistered);
+            binding.setIsHasPermission(isHasPermission);
             binding.setIsEditable(tutoringClass.getStatus().equals(Constants.CLASS_STATUS_REJECTED));
             binding.setIsNotActive(!tutoringClass.getStatus().equals(Constants.CLASS_STATUS_ASSIGNED));
             binding.tvClassId.setText(Utility.boldText(context.getString(R.string.classes_screen_class_id, tutoringClass.get_id())));
@@ -89,8 +115,6 @@ public class ClassAdapter extends RecyclerView.Adapter<ClassAdapter.ViewHolder> 
             binding.tvForm.setText(Utility.boldText(context.getString(R.string.classes_screen_form, tutoringClass.getForm())));
             binding.tvAddress.setText(Utility.boldText(context.getString(R.string.classes_screen_address, tutoringClass.getAddress())));
             binding.tvSalary.setText(Utility.boldText(context.getString(R.string.classes_screen_salary, salaryString)));
-            if (reason != null)
-                binding.tvReason.setText(Utility.boldText(context.getString(R.string.classes_screen_reason, reason)));
             binding.btnRegister.setOnClickListener(view -> {
                 Log.d("ClassAdapter", "Register button clicked for class: " + tutoringClass.get_id());
                 if (listener != null) {

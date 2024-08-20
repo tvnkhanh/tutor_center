@@ -6,12 +6,10 @@ import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_CL
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_COURSES;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_HOME;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_SEARCH;
-import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TEACHER_DETAIL;
 import static ptit.tvnkhanh.tutor_center_management.util.Constants.NAVIGATION_TUTORS;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,7 +72,6 @@ public class AdminMainActivity extends AppCompatActivity implements OnNavigation
 
         getOnBackPressedDispatcher().addCallback(this, callback);
 
-        Utility.fetchAllReasons();
         Utility.loadAllSubjects(new Utility.SubjectCallback() {
             @Override
             public void onSuccess(List<Subject> subjects) {
@@ -124,7 +121,7 @@ public class AdminMainActivity extends AppCompatActivity implements OnNavigation
         }
     }
 
-    private void setSelectedItemBottomBar() {
+    public void setSelectedItemBottomBar() {
         if (navController.getCurrentDestination() != null) {
             int id = navController.getCurrentDestination().getId();
             if (id == R.id.adminHomeScreenFragment) {
@@ -157,7 +154,7 @@ public class AdminMainActivity extends AppCompatActivity implements OnNavigation
         }
     }
 
-    private void setHideToolbar() {
+    public void setHideToolbar() {
         binding.toolbar.setVisibility(View.GONE);
         binding.bottomNavigationView.setVisibility(View.VISIBLE);
     }

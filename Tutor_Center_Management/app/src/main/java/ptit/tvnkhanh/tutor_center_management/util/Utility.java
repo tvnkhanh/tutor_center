@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.databinding.DataBindingUtil;
@@ -58,7 +57,7 @@ import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
 import ptit.tvnkhanh.tutor_center_management.services.common.ClientService;
 import ptit.tvnkhanh.tutor_center_management.services.common.SubjectService;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
-import ptit.tvnkhanh.tutor_center_management.services.common.models.ReasonRequest;
+import ptit.tvnkhanh.tutor_center_management.services.admin.models.ReasonRequest;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -71,7 +70,6 @@ public class Utility {
     private static Dialog classDetailDialog;
     private static DialogListBinding dialogItemListBinding;
     private static Dialog warningDialog;
-    private static final Map<String, String> reasonsCache = new HashMap<>();
     private static List<Subject> subjectsCache = new ArrayList<>();
     private static boolean isSubjectsLoaded = false;
 
@@ -416,34 +414,51 @@ public class Utility {
         void onCancel();
     }
 
-    public static void fetchAllReasons() {
+    public static void fetchReason(String classId, String tutorId, ReasonCallback callback) {
         AdminService adminService = RetrofitClient.getRetrofitInstance().create(AdminService.class);
-        Call<List<ReasonRequest>> call = adminService.getReasons();
-        call.enqueue(new Callback<List<ReasonRequest>>() {
+
+        Call<List<ReasonRequest>> call = adminService.getReasons(
+                classId != null && !classId.isEmpty() ? classId : null,
+                tutorId != null && !tutorId.isEmpty() ? tutorId : null
+        );
+
+        call.enqueue(new retrofit2.Callback<List<ReasonRequest>>() {
             @Override
             public void onResponse(Call<List<ReasonRequest>> call, Response<List<ReasonRequest>> response) {
                 if (response.isSuccessful()) {
                     List<ReasonRequest> reasonRequests = response.body();
-                    if (reasonRequests != null) {
+                    if (reasonRequests != null && !reasonRequests.isEmpty()) {
+                        String result = null;
                         for (ReasonRequest reasonRequest : reasonRequests) {
-                            reasonsCache.put(reasonRequest.getClassId(), reasonRequest.getReason());
+                            if ((classId != null && classId.equals(reasonRequest.getClassId())) ||
+                                    (tutorId != null && tutorId.equals(reasonRequest.getTutorId()))) {
+                                result = reasonRequest.getReason();
+                                break;
+                            }
                         }
-                        Log.d("Utility", "Fetched all reasons successfully.");
+                        if (result != null) {
+                            callback.onSuccess(result);
+                        } else {
+                            callback.onError("Reason not found");
+                        }
+                    } else {
+                        callback.onError("Reason not found");
                     }
                 } else {
-                    Log.e("Utility", "Failed to fetch reasons. Response code: " + response.code());
+                    callback.onError("Failed to fetch reason. Response code: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<List<ReasonRequest>> call, Throwable t) {
-                Log.e("Utility", "Failed to fetch reasons: " + t.getMessage());
+                callback.onError("Failed to fetch reason: " + t.getMessage());
             }
         });
     }
 
-    public static String getReasonByClassId(String classId) {
-        return reasonsCache.getOrDefault(classId, "Reason not found");
+    public interface ReasonCallback {
+        void onSuccess(String reason);
+        void onError(String errorMessage);
     }
 
     public static void showUpdateClassDialog(Context context, TutoringClass tutoringClass,
@@ -505,21 +520,35 @@ public class Utility {
         builder.setTitle("Update Class Information")
                 .setView(binding.getRoot())
                 .setPositiveButton("Update", (dialog, which) -> {
-                    if (listener != null) {
-                        TutoringClass updatedClass = new TutoringClass();
-                        updatedClass.setStudentInfo(binding.edtStudentInfo.getText().toString());
-                        updatedClass.setSchedule(parseSchedule(binding.edtSchedule.getText().toString()));
-                        updatedClass.setSalary(binding.edtSalary.getText().toString());
-                        updatedClass.setForm(binding.edtForm.getText().toString());
-                        updatedClass.setAddress(binding.edtAddress.getText().toString());
-                        assert tutoringClass != null;
-                        updatedClass.setStatus(tutoringClass.getStatus());
-                        if (!subjectIds.isEmpty())
-                            updatedClass.setSubjects(subjectIds);
-                        updatedClass.setRequirement(binding.edtRequirement.getText().toString());
+                    Utility.showConfirmationDialog(context,
+                            "Update Class Information",
+                            "Are you sure you want to update the class information?",
+                            "Yes", "No",
+                            new OnDialogWarningCallback() {
+                                @Override
+                                public void onConfirm() {
+                                    if (listener != null) {
+                                        TutoringClass updatedClass = new TutoringClass();
+                                        updatedClass.setStudentInfo(binding.edtStudentInfo.getText().toString());
+                                        updatedClass.setSchedule(parseSchedule(binding.edtSchedule.getText().toString()));
+                                        updatedClass.setSalary(binding.edtSalary.getText().toString());
+                                        updatedClass.setForm(binding.edtForm.getText().toString());
+                                        updatedClass.setAddress(binding.edtAddress.getText().toString());
+                                        assert tutoringClass != null;
+                                        updatedClass.setStatus(tutoringClass.getStatus());
+                                        if (!subjectIds.isEmpty())
+                                            updatedClass.setSubjects(subjectIds);
+                                        updatedClass.setRequirement(binding.edtRequirement.getText().toString());
 
-                        listener.onUpdateClass(updatedClass);
-                    }
+                                        listener.onUpdateClass(updatedClass);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancel() {
+
+                                }
+                            });
                 })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                 .show();

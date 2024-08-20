@@ -21,6 +21,7 @@ import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.Utility;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder> {
+    private static final String FEE_PERCENT = "30%";
     private Context context;
     private List<PaymentInfoDataResponse> dataResponses;
     private OnPaymentInfoClickListener listener;
@@ -77,6 +78,8 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
             binding.tvSchedule.setText(Utility.boldText(context.getString(R.string.payment_screen_schedule, dataResponse.getSchedule())));
             binding.tvForm.setText(Utility.boldText(context.getString(R.string.payment_screen_form, dataResponse.getForm())));
             binding.tvAddress.setText(Utility.boldText(context.getString(R.string.payment_screen_address, dataResponse.getAddress())));
+            binding.tvSalary.setText(Utility.boldText(context.getString(R.string.payment_screen_salary, dataResponse.getSalary())));
+            binding.tvFeePercent.setText(Utility.boldText(context.getString(R.string.payment_screen_fee_percent, FEE_PERCENT)));
             binding.tvAmount.setText(Utility.boldText(context.getString(R.string.payment_screen_amount, Utility.formatNumber(amount))));
             binding.btnPay.setOnClickListener(view -> {
                 if (listener != null) {

@@ -4,6 +4,7 @@ const Tutor = require("../models/tutor");
 const Account = require("../models/account");
 const auth = require("../middlewares/auth");
 const Subject = require("../models/subject");
+const moment = require('moment');
 
 const tutorRouter = express.Router();
 
@@ -150,6 +151,57 @@ tutorRouter.post("/api/tutor", async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Failed to create tutor" });
+  }
+});
+
+tutorRouter.put("/api/tutors/:id", async (req, res) => {
+  try {
+    const tutorId = req.params.id;
+    const updateData = req.body;
+
+    if (updateData.dateOfBirth) {
+      updateData.dateOfBirth = moment(updateData.dateOfBirth, "DD/MM/YYYY").toDate();
+    }
+
+    const updatedTutor = await Tutor.findByIdAndUpdate(tutorId, updateData, {
+      new: true,
+    }).populate("subjects");
+
+    if (!updatedTutor) {
+      return res.status(404).json({ message: "Tutor not found" });
+    }
+
+    const tutorData = {
+      _id: updatedTutor._id,
+      firstName: updatedTutor.firstName,
+      lastName: updatedTutor.lastName,
+      dateOfBirth: updatedTutor.dateOfBirth,
+      gender: updatedTutor.gender,
+      contactNumber: updatedTutor.contactNumber,
+      email: updatedTutor.email,
+      portraitPhotos: updatedTutor.portraitPhotos,
+      address: updatedTutor.address,
+      qualification: updatedTutor.qualification,
+      experience: updatedTutor.experience,
+      graduationYear: updatedTutor.graduationYear,
+      teachingTime: updatedTutor.teachingTime,
+      citizenId: updatedTutor.citizenId,
+      subjects: updatedTutor.subjects.map((subject) => ({
+        _id: subject._id,
+        subjectName: subject.subjectName,
+        grade: subject.grade,
+      })),
+      subjectIds: updatedTutor.subjects.map((subject) =>
+        subject._id.toString()
+      ),
+      status: updatedTutor.status,
+      registerDate: updatedTutor.registerDate,
+    };
+
+    res.status(200).json(tutorData);
+  } catch (error) {
+    console.error("Error updating tutor data:", error);
+    res.status(500).json({ message: error.message });
   }
 });
 

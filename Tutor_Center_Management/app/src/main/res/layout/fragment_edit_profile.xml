@@ -5,10 +5,15 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="ptit.tvnkhanh.tutor_center_management.util.Utility"/>
 
         <variable
             name="isTutor"
             type="Boolean" />
+
+        <variable
+            name="tutor"
+            type="ptit.tvnkhanh.tutor_center_management.models.Tutor" />
     </data>
 
     <RelativeLayout
@@ -24,48 +29,19 @@
             android:indeterminateTint="@color/app_primary_color"
             android:layout_centerInParent="true"/>
 
-        <ptit.tvnkhanh.tutor_center_management.view.custom.CustomToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"/>
-
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_screen_title_text"
-            android:textSize="@dimen/app_fontsize_20"
-            android:textStyle="bold"
-            android:textColor="@color/app_text_heading_color"
-            android:layout_marginTop="@dimen/app_margin_top_1"
-            android:layout_below="@+id/toolbar"
-            android:layout_centerInParent="true"/>
-
-        <TextView
-            android:id="@+id/tvSubtitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/detail_screen_sub_title"
-            android:textSize="@dimen/app_fontsize_14"
-            android:textColor="@color/app_text_body_text_color"
-            android:layout_marginTop="@dimen/app_margin_top_1"
-            android:layout_below="@+id/tvTitle"
-            android:layout_centerInParent="true"/>
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="@{isTutor ? View.VISIBLE : View.GONE}"
-            android:layout_marginTop="@dimen/app_margin_top_3"
+            android:layout_marginTop="@dimen/app_margin_top_6"
             android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
-            android:layout_below="@+id/tvSubtitle"
-            android:layout_above="@+id/btnSubmit">
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/btnSubmit">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingTop="@dimen/app_padding_2"
                 android:orientation="vertical">
 
                 <EditText
@@ -75,6 +51,7 @@
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_1"
                     android:textSize="@dimen/app_fontsize_14"
+                    android:text="@{tutor.getFirstName()}"
                     android:textColor="@color/app_text_body_text_color"
                     android:inputType="textPersonName"/>
 
@@ -84,6 +61,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_2"
+                    android:text="@{tutor.getLastName()}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -95,6 +73,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_3"
+                    android:text="@{Utility.convertDateFormat(tutor.getDateOfBirth().getTime())}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -106,12 +85,12 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_4"
+                    android:text="@{tutor.getGender()}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
                     android:inputType="none"
                     android:focusable="false"
-                    android:text="@string/detail_screen_gender_1"
                     android:drawableEnd="@drawable/ic_expand_arrow"/>
 
                 <EditText
@@ -120,6 +99,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_5"
+                    android:text="@{tutor.getContactNumber()}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -130,6 +110,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
+                    android:text="@{tutor.getEmail()}"
                     android:hint="@string/detail_screen_edt_hint_6"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
@@ -141,6 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
+                    android:text="@{tutor.getAddress()}"
                     android:hint="@string/detail_screen_edt_hint_8"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
@@ -153,6 +135,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_10"
+                    android:text="@{tutor.getExperience()}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -164,6 +147,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_11"
+                    android:text="@{String.valueOf(tutor.getGraduationYear())}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -174,6 +158,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
+                    android:text="@{tutor.getTeachingTime()}"
                     android:hint="@string/detail_screen_edt_hint_12"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
@@ -185,6 +170,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
+                    android:text="@{tutor.getCitizenId()}"
                     android:hint="@string/detail_screen_edt_hint_13"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
@@ -198,6 +184,7 @@
                     style="@style/CustomEditTextStyle"
                     android:focusable="false"
                     android:hint="@string/detail_screen_edt_hint_7"
+                    android:text="@{tutor.getPortraitPhotos().get(0)}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
@@ -215,6 +202,7 @@
                     android:layout_height="wrap_content"
                     style="@style/CustomEditTextStyle"
                     android:hint="@string/detail_screen_edt_hint_9"
+                    android:text="@{tutor.getQualification().get(0)}"
                     android:textSize="@dimen/app_fontsize_14"
                     android:focusable="false"
                     android:textColor="@color/app_text_body_text_color"
@@ -233,10 +221,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="@{isTutor ? View.GONE : View.VISIBLE}"
-            android:layout_marginTop="@dimen/app_margin_top_3"
+            android:layout_marginTop="@dimen/app_margin_top_6"
             android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"
-            android:layout_below="@+id/tvSubtitle"
-            android:layout_above="@+id/btnSubmit">
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/btnSubmit">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -263,31 +251,6 @@
                     android:textColor="@color/app_text_body_text_color"
                     android:layout_marginTop="@dimen/app_margin_top_2"
                     android:inputType="textPersonName"/>
-
-<!--                <EditText-->
-<!--                    android:id="@+id/edtDateOfBirthUser"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    style="@style/CustomEditTextStyle"-->
-<!--                    android:hint="@string/detail_screen_edt_hint_3"-->
-<!--                    android:textSize="@dimen/app_fontsize_14"-->
-<!--                    android:textColor="@color/app_text_body_text_color"-->
-<!--                    android:layout_marginTop="@dimen/app_margin_top_2"-->
-<!--                    android:inputType="textNoSuggestions"/>-->
-
-<!--                <EditText-->
-<!--                    android:id="@+id/edtGenderUser"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    style="@style/CustomEditTextStyle"-->
-<!--                    android:hint="@string/detail_screen_edt_hint_4"-->
-<!--                    android:textSize="@dimen/app_fontsize_14"-->
-<!--                    android:textColor="@color/app_text_body_text_color"-->
-<!--                    android:layout_marginTop="@dimen/app_margin_top_2"-->
-<!--                    android:inputType="none"-->
-<!--                    android:focusable="false"-->
-<!--                    android:text="@string/detail_screen_gender_1"-->
-<!--                    android:drawableEnd="@drawable/ic_expand_arrow"/>-->
 
                 <EditText
                     android:id="@+id/edtContactNumberUser"
@@ -318,7 +281,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/CustomPrimaryButton"
-            android:text="@string/detail_screen_button_text"
+            android:text="@string/detail_screen_button_text_2"
             android:layout_marginTop="@dimen/app_margin_top_3"
             android:layout_marginBottom="@dimen/app_margin_bottom_1"
             android:layout_marginHorizontal="@dimen/app_margin_horizontal_1"

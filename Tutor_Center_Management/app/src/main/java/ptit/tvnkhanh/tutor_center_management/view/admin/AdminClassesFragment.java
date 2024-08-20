@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.EditText;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,7 +29,7 @@ import ptit.tvnkhanh.tutor_center_management.services.admin.AdminService;
 import ptit.tvnkhanh.tutor_center_management.services.admin.models.StatusRequest;
 import ptit.tvnkhanh.tutor_center_management.services.common.ClassService;
 import ptit.tvnkhanh.tutor_center_management.services.common.TutorService;
-import ptit.tvnkhanh.tutor_center_management.services.common.models.ReasonRequest;
+import ptit.tvnkhanh.tutor_center_management.services.admin.models.ReasonRequest;
 import ptit.tvnkhanh.tutor_center_management.util.Constants;
 import ptit.tvnkhanh.tutor_center_management.util.SharedPreferencesUtility;
 import ptit.tvnkhanh.tutor_center_management.util.Utility;
@@ -175,9 +174,9 @@ public class AdminClassesFragment extends Fragment implements AdminClassAdapter.
                     @Override
                     public void onConfirm() {
                         Utility.showInputReasonDialog(requireContext(),
-                                "Delete class",
-                                "Please provide a reason for deleting this class",
-                                "Delete",
+                                "Reject class",
+                                "Please provide a reason for rejecting this class",
+                                "Reject",
                                 "Cancel",
                                 new Utility.InputReasonCallback() {
                                     @Override
@@ -189,6 +188,7 @@ public class AdminClassesFragment extends Fragment implements AdminClassAdapter.
                                             public void onResponse(Call<TutoringClass> call, Response<TutoringClass> response) {
                                                 if (response.isSuccessful()) {
                                                     Log.d("AdminClassesFragment", "onResponse: " + response.body());
+                                                    Utility.showToast(requireContext(), "Class rejected successfully");
                                                     getClassesData();
                                                 } else {
                                                     Log.d("AdminClassesFragment", "onResponse: " + response.code());
@@ -200,7 +200,7 @@ public class AdminClassesFragment extends Fragment implements AdminClassAdapter.
                                                 Log.d("AdminClassesFragment", "onFailure: " + throwable.getMessage());
                                             }
                                         });
-                                        adminService.createReason(new ReasonRequest(classItem.get_id(), reason)).enqueue(new Callback<ReasonRequest>() {
+                                        adminService.createReason(new ReasonRequest(classItem.get_id(), null, reason)).enqueue(new Callback<ReasonRequest>() {
                                             @Override
                                             public void onResponse(Call<ReasonRequest> call, Response<ReasonRequest> response) {
                                                 Log.d("AdminClassesFragment", "onResponse: " + response.body());
@@ -258,10 +258,16 @@ public class AdminClassesFragment extends Fragment implements AdminClassAdapter.
                         }, "Registered Tutors", -1, new Utility.OnItemDialogCallback() {
                             @Override
                             public void onConfirm() {
-                                TutoringClass tutoringClass = new TutoringClass();
-                                tutoringClass.setTutorId(new ArrayList<>(List.of(selectedTutorId)));
-                                updateClass(classItem.get_id(), tutoringClass);
-                                changeClassStatus(classItem);
+                                Log.d("AdminClassesFragment", "onResponse: " + selectedTutorId);
+                                if (selectedTutorId != null) {
+                                    TutoringClass tutoringClass = new TutoringClass();
+                                    tutoringClass.setTutorId(new ArrayList<>(List.of(selectedTutorId)));
+                                    updateClass(classItem.get_id(), tutoringClass);
+                                    changeClassStatus(classItem);
+                                    Utility.showToast(requireContext(), "Class assigned successfully");
+                                } else {
+                                    Utility.showToast(requireContext(), "No tutor selected");
+                                }
                             }
 
                             @Override
@@ -301,27 +307,39 @@ public class AdminClassesFragment extends Fragment implements AdminClassAdapter.
     private void changeClassStatus(TutoringClass classItem) {
         binding.progressBar.setVisibility(View.VISIBLE);
         StatusRequest statusRequest = new StatusRequest();
-        if (classItem.getStatus().equals(Constants.CLASS_STATUS_PENDING)) {
-            statusRequest.setStatus(Constants.CLASS_STATUS_APPROVED);
-        } else if (classItem.getStatus().equals(Constants.CLASS_STATUS_APPROVED)) {
-            statusRequest.setStatus(Constants.CLASS_STATUS_ASSIGNED);
-        } else if (classItem.getStatus().equals(Constants.CLASS_STATUS_ASSIGNED)) {
-            statusRequest.setStatus(Constants.CLASS_STATUS_COMPLETED);
+        String statusNotifyText = "";
+        switch (classItem.getStatus()) {
+            case Constants.CLASS_STATUS_PENDING:
+                statusRequest.setStatus(Constants.CLASS_STATUS_APPROVED);
+                statusNotifyText = "Class approved successfully";
+                break;
+            case Constants.CLASS_STATUS_APPROVED:
+                statusRequest.setStatus(Constants.CLASS_STATUS_ASSIGNED);
+                statusNotifyText = "Class assigned successfully";
+                break;
+            case Constants.CLASS_STATUS_ASSIGNED:
+                statusRequest.setStatus(Constants.CLASS_STATUS_COMPLETED);
+                statusNotifyText = "Class completed successfully";
+                break;
         }
+        String finalStatusNotifyText = statusNotifyText;
         adminService.updateClassStatus(token, classItem.get_id(), statusRequest).enqueue(new Callback<TutoringClass>() {
             @Override
             public void onResponse(Call<TutoringClass> call, Response<TutoringClass> response) {
                 if (response.isSuccessful()) {
                     Log.d("AdminClassesFragment", "onResponse: " + response.body());
+                    Utility.showToast(requireContext(), finalStatusNotifyText);
                     getClassesData();
                 } else {
                     Log.d("AdminClassesFragment", "onResponse: " + response.code());
+                    Utility.showToast(requireContext(), "Error: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<TutoringClass> call, Throwable throwable) {
                 Log.d("AdminClassesFragment", "onFailure: " + throwable.getMessage());
+                Utility.showToast(requireContext(), "Error: " + throwable.getMessage());
             }
         });
     }

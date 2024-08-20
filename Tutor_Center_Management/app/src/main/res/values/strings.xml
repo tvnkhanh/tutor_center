@@ -12,12 +12,13 @@
 
     <!--  Common  -->
     <string name="app_see_all_text">See all</string>
+    <string name="app_status_title_filter">Status:</string>
 
     <!--  Bottom navigation bar  -->
     <string name="bottom_navigation_home_title">Home</string>
     <string name="bottom_navigation_classes_title">Classes</string>
     <string name="bottom_navigation_tutor_title">Tutors</string>
-    <string name="bottom_navigation_courses_title">My Courses</string>
+    <string name="bottom_navigation_courses_title">My Classes</string>
     <string name="bottom_navigation_revenue_title">Statistics</string>
     <string name="bottom_navigation_profile_title">Profile</string>
 
@@ -78,6 +79,7 @@
     <string name="detail_screen_edt_hint_12">Teaching Time</string>
     <string name="detail_screen_edt_hint_13">Citizen Id</string>
     <string name="detail_screen_button_text">Submit</string>
+    <string name="detail_screen_button_text_2">Send</string>
 
     <string name="detail_screen_gender_1">Male</string>
     <string name="detail_screen_gender_2">Female</string>
@@ -171,8 +173,12 @@
     <string name="payment_screen_schedule">#Schedule:# %s</string>
     <string name="payment_screen_form">#Form:# %s</string>
     <string name="payment_screen_address">#Address:# %s</string>
+    <string name="payment_screen_salary">#Salary:# %s</string>
+    <string name="payment_screen_fee_percent">#Fee percent:# %s</string>
     <string name="payment_screen_amount">#Amount:# %s</string>
     <string name="payment_screen_button_pay">Pay</string>
+
+    <string name="revenue_total">#Total Revenue:# %s</string>
 
     <!--  Classes  -->
     <string name="classes_screen_status">#Status:# %s</string>
@@ -191,11 +197,18 @@
     <string name="classes_screen_button_rejected">Reject</string>
 
     <!--  Profile Screen  -->
+    <string name="profile_screen_title">Profile</string>
+    <string name="profile_screen_item_title_0">Tutor Information</string>
     <string name="profile_screen_item_title_1">Edit Profile</string>
     <string name="profile_screen_item_title_2">Teacher List</string>
     <string name="profile_screen_item_title_3">Help</string>
     <string name="profile_screen_item_title_4">Referral</string>
     <string name="profile_screen_item_title_5">Log out</string>
+    <string name="profile_screen_id">ID: %s</string>
+    <string name="profile_screen_email">Mail: %s</string>
+    <string name="profile_screen_address">Address: %s</string>
+    <string name="profile_screen_status">Status: %s</string>
+    <string name="profile_screen_reason">Reason: %s</string>
 
     <!--  Dialog  -->
     <string name="dialog_warning_title">Warning</string>
